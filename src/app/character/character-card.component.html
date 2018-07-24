@@ -1,19 +1,25 @@
 <div class="card text-white bg-dark">
   <img class="card-img-top" avatar [character]="character" type="main">
   <div class="card-img-overlay">
-    <h5 class="card-title">{{ character.name}}</h5>
-    <span class="label label-default">{{ character.level }}</span>
+    <h5>{{ character.name}}<span class="float-right">{{ character.level }}</span></h5>
+    <div>
+      <span>{{ race.name }}</span> <span>{{ class.name }}</span><span class="text-capitalize float-right">{{ race.side }}</span>
+    </div>
+    <div>
+      <img class="rounded" [src]="'http://media.blizzard.com/wow/icons/36/' + character.talents[0].spec.icon + '.jpg'" [title]="character.talents[0].spec.name"> {{ character.talents[0].spec.name }}
+    </div>
+
     <!--<img [src]="'http://media.blizzard.com/wow/icons/36/' + character.talents[0] + '.spec.icon.jpg'">-->
-    <!--<img avatar [character]="character" type="profilemain">-->
-    <!--<img avatar [character]="character" type="inset">-->
-    <!--<img avatar [character]="character" type="avatar">-->
+
 
     <!--<span class="label label-default text-capitalize">{{ character.race.side }}</span>-->
     <!--<span class="label label-default">{{ character.race.name }}</span>-->
     <!--<span class="label label-default">{{ character.class.name }}</span>-->
   </div>
-  <div class="card-footer small">
-    {{ class  | json }}<br>
-    {{ race  | json }}
+  <div class="card-footer">
+    <div>
+      <character-profession></character-profession>
+      <character-profession></character-profession>
+    </div>
   </div>
 </div>

@@ -3,7 +3,7 @@ import {Race} from './race';
 import {Class} from './class';
 import {Character} from './character';
 import {BattleNetService} from './battle-net.service';
-import {forEach} from '@angular/router/src/utils/collection';
+import {forkJoin} from 'rxjs/observable/forkJoin';
 
 @Injectable()
 export class GameDataService {
@@ -14,22 +14,31 @@ export class GameDataService {
 
   constructor(private battleNetService: BattleNetService) {
 
-    this.battleNetService.getClasses().subscribe((result) => this.classes = result);
-    this.battleNetService.getRaces().subscribe((result) => this.races = result);
+    forkJoin(
+      // load  base data
+      this.battleNetService.getClasses(),
+      this.battleNetService.getRaces()
 
-    this.battleNetService.getCharacter('azjol-nerub', 'asumi').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'sameera').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'lexiss').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'livana').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'mayara').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'salus').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'sheeta').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'siasan').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'snowise').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'sunzie').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'talah').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'valiah').subscribe((result: Character) => this.characters.push(result));
-    this.battleNetService.getCharacter('azjol-nerub', 'zirelle').subscribe((result: Character) => this.characters.push(result));
+    ).subscribe(([classes, races]) => {
+
+      this.classes = classes;
+      this.races = races;
+
+      this.battleNetService.getCharacter('azjol-nerub', 'asumi').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'sameera').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'lexiss').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'livana').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'mayara').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'salus').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'sheeta').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'siasan').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'snowise').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'sunzie').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'talah').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'valiah').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('azjol-nerub', 'zirelle').subscribe((result: Character) => this.characters.push(result));
+      this.battleNetService.getCharacter('khadgar', 'Zyrin').subscribe((result: Character) => this.characters.push(result));
+    });
   }
 
   findClass(id: number): Class {
@@ -39,6 +48,7 @@ export class GameDataService {
       }
     }
   }
+
   findRace(id: number): Race {
     for (const entry of this.races) {
       if (id === entry.id) {

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {Character} from './character';
 import {Class, Classes} from './class';
 import {Race, Races} from './race';
+import {delay} from 'rxjs/operator/delay';
 
 @Injectable()
 export class BattleNetService {
@@ -18,7 +19,10 @@ export class BattleNetService {
   getClasses(): Observable<Class[]> {
     return new Observable<Class[]>((observer) => {
         const url = this.baseUrl + '/data/character/classes?' + this.apiKey;
-        this.getData('classes', url).subscribe((result: Classes) => observer.next(result.classes));
+        this.getData('classes', url).subscribe((result: Classes) => {
+          observer.next(result.classes);
+          observer.complete();
+        });
       }
     );
   }
@@ -26,7 +30,10 @@ export class BattleNetService {
   getRaces(): Observable<Race[]> {
     return new Observable<Race[]>((observer) => {
         const url = this.baseUrl + '/data/character/races?' + this.apiKey;
-        this.getData('races', url).subscribe((result: Races) => observer.next(result.races));
+        this.getData('races', url).subscribe((result: Races) => {
+          observer.next(result.races);
+          observer.complete();
+        });
       }
     );
   }
@@ -35,7 +42,10 @@ export class BattleNetService {
     return new Observable<Character>((observer) => {
         const fields = 'fields=professions+quests+talents+feed+achievements';
         const url = this.baseUrl + '/character/' + realm + '/' + name + '?' + fields + '&' + this.apiKey;
-        this.getData(realm + '/' + name, url).subscribe((result: Character) => observer.next(result));
+        this.getData(realm + '/' + name, url).subscribe((result: Character) => {
+          observer.next(result);
+          observer.complete();
+        });
       }
     );
   }
