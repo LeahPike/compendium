@@ -10,7 +10,7 @@ import {Race} from '../data/race';
 })
 export class CharacterCardComponent implements OnChanges {
 
-  @Input('character')
+  @Input()
   character: Character;
 
   class: Class = null;

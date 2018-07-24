@@ -17,9 +17,11 @@
     <!--<span class="label label-default">{{ character.class.name }}</span>-->
   </div>
   <div class="card-footer">
-    <div>
-      <character-profession></character-profession>
-      <character-profession></character-profession>
+    <div *ngFor="let profession of character.professions.primary">
+      <character-profession [profession]="profession"></character-profession>
+    </div>
+    <div *ngFor="let profession of character.professions.secondary">
+      <character-profession [profession]="profession"></character-profession>
     </div>
   </div>
 </div>

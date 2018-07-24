@@ -8,10 +8,10 @@ import {Character} from '../data/character';
 export class CharacterAvatarDirective implements OnChanges {
   element: HTMLImageElement;
 
-  @Input('character')
+  @Input()
   character: Character;
 
-  @Input('type')
+  @Input()
   type: string; // main | profilemain ( outdated?) | inset | avatar
 
   constructor(el: ElementRef) {
