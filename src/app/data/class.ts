@@ -4,3 +4,7 @@ export interface Class {
   name: string; // Warrior
   powerType: string; // rage
 }
+
+export interface Classes {
+  classes: Class[];
+}
