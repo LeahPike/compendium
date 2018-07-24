@@ -1,0 +1,39 @@
+﻿<div class="row p-t-2">
+    <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3" ng-repeat="character in characterController.data.characters | orderBy:['-level','name']">
+        <div class="card">
+            <div class="card-header" style="background-color:#242424">
+
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td rowspan="2">
+                            <a class="" ng-href="http://eu.battle.net/wow/en/character/{{character.realm}}/{{character.name}}/advanced" target="_blank">
+                                <img class="img-rounded" ng-src="http://render-api-eu.worldofwarcraft.com/static-render/eu/{{character.thumbnail}}">
+                            </a>
+                        </td>
+                        <td valign="top">
+                            <img style="padding:5px;" ng-show="character.talents[0].spec" title="{{ character.talents[0].spec.name }}" ng-src="http://media.blizzard.com/wow/icons/36/{{character.talents[0].spec.icon}}.jpg">
+                        </td>
+                        <td>
+                            {{ character.talents[0].spec.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img style="padding:5px;" ng-show="character.talents[1].spec" title="{{ character.talents[1].spec.name }}" ng-src="http://media.blizzard.com/wow/icons/36/{{character.talents[1].spec.icon}}.jpg"></td>
+                        <td>{{ character.talents[1].spec.name }}</td>
+                    </tr>
+                </table>
+                <h4 class="card-title" style="color:{{ character.class.colour }};">
+                    {{ character.name }}
+                </h4>
+                <span class="label label-default">{{ character.level }}</span>
+                <span class="label label-default text-capitalize">{{ character.race.side }}</span>
+                <span class="label label-default">{{ character.race.name }}</span>
+                <span class="label label-default">{{ character.class.name }}</span>
+            </div>
+            <div class="card-block">
+                <p>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
