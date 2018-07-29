@@ -6,6 +6,8 @@ import {CharacterProfessionComponent} from './character-profession.component';
 import {CharacterCardsComponent} from './character-cards.component';
 import {CharacterAchievementsComponent} from './character-achievements.component';
 import {CharacterProfessionsComponent} from './character-professions.component';
+import {CharacterInsetComponent} from './character-inset.component';
+import {CharacterAchievementComponent} from './character-achievement.component';
 
 @NgModule({
   imports: [
@@ -16,8 +18,10 @@ import {CharacterProfessionsComponent} from './character-professions.component';
     CharacterCardComponent,
     CharacterCardsComponent,
     CharacterAchievementsComponent,
+    CharacterAchievementComponent,
     CharacterProfessionComponent,
-    CharacterProfessionsComponent
+    CharacterProfessionsComponent,
+    CharacterInsetComponent
   ],
   exports: [
     CharacterCardsComponent,

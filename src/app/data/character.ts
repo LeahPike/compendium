@@ -1,4 +1,7 @@
+import {CharacterAchievements} from './character-achievements';
+
 export interface Character {
+
   lastModified: number; // 1532215626000
   name: string; // Mayara
   realm: string; // Azjol-Nerub
@@ -12,4 +15,11 @@ export interface Character {
   calcClass: string; // U
   faction: number; // 0
   totalHonorableKills: number; // 9267
+
+  achievements: CharacterAchievements;
+
+  // custom
+  imageMain: string;
+  imageInset: string;
+  imageAvatar: string;
 }

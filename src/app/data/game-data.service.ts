@@ -4,6 +4,7 @@ import {Class} from './class';
 import {Character} from './character';
 import {BattleNetService} from './battle-net.service';
 import {forkJoin} from 'rxjs/observable/forkJoin';
+import {Achievement} from './achievement';
 
 @Injectable()
 export class GameDataService {
@@ -11,20 +12,24 @@ export class GameDataService {
   characters: Character[] = [];
   classes: Class[] = [];
   races: Race[] = [];
+  achievements: Achievement[];
 
   constructor(private battleNetService: BattleNetService) {
 
     console.log('GameDataService', 'constructor');
 
     forkJoin(
+
       // load  base data
       this.battleNetService.getClasses(),
-      this.battleNetService.getRaces()
+      this.battleNetService.getRaces(),
+      //this.battleNetService.getAchievements()
 
     ).subscribe(([classes, races]) => {
 
       this.classes = classes;
       this.races = races;
+      // this.achievements = achievements;
 
       this.battleNetService.getCharacter('azjol-nerub', 'asumi').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'sameera').subscribe((result: Character) => this.characters.push(result));
@@ -40,6 +45,8 @@ export class GameDataService {
       this.battleNetService.getCharacter('azjol-nerub', 'valiah').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'zirelle').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('khadgar', 'Zyrin').subscribe((result: Character) => this.characters.push(result));
+
+
     });
   }
 

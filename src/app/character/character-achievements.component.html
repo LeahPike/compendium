@@ -1,3 +1,32 @@
-<p>
-  chararter-achievements works!
-</p>
+<table class="table table-dark table-striped">
+  <tbody>
+  <tr>
+    <td></td>
+    <td *ngFor="let character of characters">
+      <app-character-insert [character]="character"></app-character-insert>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td *ngFor="let character of characters">
+      {{ character.achievementPoints }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Level 110
+    </td>
+    <td *ngFor="let character of characters">
+      <app-character-achievement [character]="character" [achievementId]="10671"></app-character-achievement>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Arsenal of Power
+    </td>
+    <td *ngFor="let character of characters">
+      <app-character-achievement [character]="character" [achievementId]="11171"></app-character-achievement>
+    </td>
+  </tr>
+  </tbody>
+</table>

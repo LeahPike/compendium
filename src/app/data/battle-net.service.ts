@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {Character} from './character';
 import {Class, Classes} from './class';
 import {Race, Races} from './race';
-import {delay} from 'rxjs/operator/delay';
+import {Achievement, Achievements} from './achievement';
 
 @Injectable()
 export class BattleNetService {
@@ -38,11 +38,25 @@ export class BattleNetService {
     );
   }
 
+  getAchievements(): Observable<Achievement[]> {
+    return new Observable<Achievement[]>((observer) => {
+        const url = this.baseUrl + '/data/character/achievements?' + this.apiKey;
+        this.getData('achievements', url).subscribe((result: Achievements) => {
+          observer.next(result.achievements);
+          observer.complete();
+        });
+      }
+    );
+  }
+
   getCharacter(realm: string, name: string): Observable<Character> {
     return new Observable<Character>((observer) => {
         const fields = 'fields=professions+quests+talents+feed+achievements';
         const url = this.baseUrl + '/character/' + realm + '/' + name + '?' + fields + '&' + this.apiKey;
         this.getData(realm + '/' + name, url).subscribe((result: Character) => {
+          result.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'insert');
+          result.imageMain = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'main');
+          result.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail;
           observer.next(result);
           observer.complete();
         });
