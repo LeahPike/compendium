@@ -2,7 +2,7 @@ import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
 import {Character} from '../data/character';
 
 @Directive({
-  selector: '[avatar]'
+  selector: '[appAvatar]'
 })
 
 export class CharacterAvatarDirective implements OnChanges {

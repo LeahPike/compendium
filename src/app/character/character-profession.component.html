@@ -1,7 +1,8 @@
 <img class="float-left" [title]="profession.name"
      [src]="'http://media.blizzard.com/wow/icons/36/' + profession.icon + '.jpg'">
-<div>
+<div style="display: none;">
   {{ profession.name }}
-  <progress class="progress progress-warning" value="{{profession.rank}}" [max]="profession.max">{{profession.rank}}
+  <progress class="progress progress-warning" value="{{profession.rank}}" [max]="profession.max">
+    {{profession.rank}}
   </progress>
 </div>

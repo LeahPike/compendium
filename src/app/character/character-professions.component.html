@@ -1,0 +1,23 @@
+<div class="row" *ngFor="let character of characters">
+  <div class="col-2">
+    <h5>{{ character.name }}</h5>
+  </div>
+  <div class="col-5">
+    <table>
+      <tr>
+        <td *ngFor="let profession of character.professions.primary" class="p-1">
+          <app-character-profession [profession]="profession"></app-character-profession>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-5">
+    <table>
+      <tr>
+        <td *ngFor="let profession of character.professions.secondary" class="p-1">
+          <app-character-profession [profession]="profession"></app-character-profession>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

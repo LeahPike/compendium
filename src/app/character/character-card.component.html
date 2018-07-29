@@ -1,5 +1,5 @@
 <div class="card text-white bg-dark">
-  <img class="card-img-top" avatar [character]="character" type="main">
+  <img class="card-img-top" appAvatar [character]="character" type="main">
   <div class="card-img-overlay">
     <h5>{{ character.name}}<span class="float-right">{{ character.level }}</span></h5>
     <div>
@@ -17,11 +17,5 @@
     <!--<span class="label label-default">{{ character.class.name }}</span>-->
   </div>
   <div class="card-footer">
-    <div *ngFor="let profession of character.professions.primary">
-      <character-profession [profession]="profession"></character-profession>
-    </div>
-    <div *ngFor="let profession of character.professions.secondary">
-      <character-profession [profession]="profession"></character-profession>
-    </div>
   </div>
 </div>

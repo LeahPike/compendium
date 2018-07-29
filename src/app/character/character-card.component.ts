@@ -5,7 +5,7 @@ import {Class} from '../data/class';
 import {Race} from '../data/race';
 
 @Component({
-  selector: 'character-card',
+  selector: 'app-character-card',
   templateUrl: './character-card.component.html'
 })
 export class CharacterCardComponent implements OnChanges {

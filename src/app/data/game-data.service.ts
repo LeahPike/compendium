@@ -14,6 +14,8 @@ export class GameDataService {
 
   constructor(private battleNetService: BattleNetService) {
 
+    console.log('GameDataService', 'constructor');
+
     forkJoin(
       // load  base data
       this.battleNetService.getClasses(),

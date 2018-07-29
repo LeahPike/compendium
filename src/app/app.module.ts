@@ -4,25 +4,27 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BattleNetService} from './data/battle-net.service';
 import {HttpClientModule} from '@angular/common/http';
-import {CharacterAvatarDirective} from './character/character-avatar.directive';
-import {CharacterCardComponent} from './character/character-card.component';
 import {GameDataService} from './data/game-data.service';
-import {CharacterProfessionComponent} from './character/character-profession.component';
-
+import {CharacterModule} from './character/character.module';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CharacterAvatarDirective,
-    CharacterCardComponent,
-    CharacterProfessionComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    CharacterModule,
+    AppRoutingModule
   ],
-  providers: [BattleNetService, HttpClientModule, GameDataService],
-  bootstrap: [AppComponent]
+  providers: [
+    BattleNetService,
+    HttpClientModule,
+    GameDataService],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }

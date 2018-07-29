@@ -3,7 +3,7 @@ import {GameDataService} from '../data/game-data.service';
 import {Profession} from '../data/profession';
 
 @Component({
-  selector: 'character-profession',
+  selector: 'app-character-profession',
   templateUrl: './character-profession.component.html'
 })
 export class CharacterProfessionComponent {
