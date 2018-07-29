@@ -17,15 +17,10 @@ export class CharacterAchievementComponent implements OnInit {
   completed = false;
 
   ngOnInit() {
-
     for (const entry of this.character.achievements.achievementsCompleted) {
       if (entry === this.achievementId) {
-        console.log(entry, this.achievementId)
         this.completed = true;
       }
     }
-
-    console.log(this.character.name, this.character.achievements);
   }
-
 }

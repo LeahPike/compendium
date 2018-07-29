@@ -2,13 +2,13 @@
   <tbody>
   <tr>
     <td></td>
-    <td *ngFor="let character of characters">
+    <td *ngFor="let character of characters" class="text-center">
       <app-character-insert [character]="character"></app-character-insert>
     </td>
   </tr>
   <tr>
     <td></td>
-    <td *ngFor="let character of characters">
+    <td *ngFor="let character of characters" class="text-center">
       {{ character.achievementPoints }}
     </td>
   </tr>
@@ -16,7 +16,7 @@
     <td>
       Level 110
     </td>
-    <td *ngFor="let character of characters">
+    <td *ngFor="let character of characters" class="text-center">
       <app-character-achievement [character]="character" [achievementId]="10671"></app-character-achievement>
     </td>
   </tr>
@@ -24,7 +24,7 @@
     <td>
       Arsenal of Power
     </td>
-    <td *ngFor="let character of characters">
+    <td *ngFor="let character of characters" class="text-center">
       <app-character-achievement [character]="character" [achievementId]="11171"></app-character-achievement>
     </td>
   </tr>
