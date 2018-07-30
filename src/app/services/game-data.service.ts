@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Race} from './race';
-import {Class} from './class';
-import {Character} from './character';
+import {Race} from '../data/race';
+import {Class} from '../data/class';
+import {Character} from '../data/character';
 import {BattleNetService} from './battle-net.service';
 import {forkJoin} from 'rxjs/observable/forkJoin';
-import {Achievement} from './achievement';
+import {Achievement} from '../data/achievement';
 
 @Injectable()
 export class GameDataService {
@@ -32,7 +32,7 @@ export class GameDataService {
       // this.achievements = achievements;
 
       this.battleNetService.getCharacter('azjol-nerub', 'asumi').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'sameera').subscribe((result: Character) => this.characters.push(result));
+      // this.battleNetService.getCharacter('azjol-nerub', 'sameera').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'lexiss').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'livana').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'mayara').subscribe((result: Character) => this.characters.push(result));
@@ -44,7 +44,7 @@ export class GameDataService {
       this.battleNetService.getCharacter('azjol-nerub', 'talah').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'valiah').subscribe((result: Character) => this.characters.push(result));
       this.battleNetService.getCharacter('azjol-nerub', 'zirelle').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('khadgar', 'Zyrin').subscribe((result: Character) => this.characters.push(result));
+      // this.battleNetService.getCharacter('khadgar', 'Zyrin').subscribe((result: Character) => this.characters.push(result));
 
 
     });

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Character} from './data/character';
 import {Class} from './data/class';
 import {Race} from './data/race';
-import {GameDataService} from './data/game-data.service';
+import {GameDataService} from './services/game-data.service';
 
 @Component({
   selector: 'app-root',

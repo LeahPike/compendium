@@ -1,1 +1,12 @@
-<i *ngIf="completed" class="fas fa-2x fa-check-circle text-success"></i>
+<i class="fas fa-2x fa-check-circle" [ngClass]="{'text-success': completed, 'text-dark' : !completed}"></i>
+<div *ngFor="let item of matchedCriteria" class="small text-muted bg-dark mt-1 p-1">
+  <div>
+    id: {{ item.id }}
+  </div>
+  <div [ngClass]="{'text-success': item.quantity === item.criteria.max}">
+    max: {{ item.quantity }} / {{ item.criteria.max }}
+  </div>
+  <div>
+    {{ item.criteria.description }}
+  </div>
+</div>

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Character} from './character';
-import {Class, Classes} from './class';
-import {Race, Races} from './race';
-import {Achievement, Achievements} from './achievement';
+import {Character} from '../data/character';
+import {Class, Classes} from '../data/class';
+import {Race, Races} from '../data/race';
+import {Achievement, Achievements} from '../data/achievement';
 
 @Injectable()
 export class BattleNetService {
@@ -38,6 +38,17 @@ export class BattleNetService {
     );
   }
 
+  getAchievement(achievementId: number): Observable<Achievement> {
+    return new Observable<Achievement>((observer) => {
+        const url = this.baseUrl + '/achievement/' + achievementId + '?' + this.apiKey;
+        this.getData('achievement' + achievementId, url).subscribe((result: Achievement) => {
+          observer.next(result);
+          observer.complete();
+        });
+      }
+    );
+  }
+
   getAchievements(): Observable<Achievement[]> {
     return new Observable<Achievement[]>((observer) => {
         const url = this.baseUrl + '/data/character/achievements?' + this.apiKey;
@@ -54,9 +65,12 @@ export class BattleNetService {
         const fields = 'fields=professions+quests+talents+feed+achievements';
         const url = this.baseUrl + '/character/' + realm + '/' + name + '?' + fields + '&' + this.apiKey;
         this.getData(realm + '/' + name, url).subscribe((result: Character) => {
+
+          // https://dev.battle.net/docs/read/community_apis/world_of_warcraft/Character_Renders
           result.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'insert');
           result.imageMain = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'main');
           result.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail;
+
           observer.next(result);
           observer.complete();
         });

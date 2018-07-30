@@ -2,11 +2,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {BattleNetService} from './data/battle-net.service';
 import {HttpClientModule} from '@angular/common/http';
-import {GameDataService} from './data/game-data.service';
 import {CharacterModule} from './character/character.module';
 import {AppRoutingModule} from './app-routing.module';
+import {BattleNetService} from './services/battle-net.service';
+import {GameDataService} from './services/game-data.service';
 
 @NgModule({
   declarations: [
