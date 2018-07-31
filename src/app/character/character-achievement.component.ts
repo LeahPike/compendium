@@ -22,30 +22,37 @@ export class CharacterAchievementComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.achievement);
+    let matchedCriteria = 0;
 
     for (const criteria of this.achievement.criteria) {
+
+      const match = {
+        id: criteria.id,
+        quantity: null,
+        created: null,
+        timestamp: null,
+        criteria: criteria
+      };
+
+      this.matchedCriteria.push(match);
+
       for (let index = 0; index < this.character.achievements.criteria.length; index++) {
+
         if (criteria.id === this.character.achievements.criteria[index]) {
 
-          const criteriaId = this.character.achievements.criteria[index];
-          const criteriaQuantity = this.character.achievements.criteriaQuantity[index];
-          const criteriaCreated = this.character.achievements.criteriaCreated[index];
-          const criteriaTimestamp = this.character.achievements.criteriaTimestamp[index];
+          match.quantity = this.character.achievements.criteriaQuantity[index];
+          match.created = this.character.achievements.criteriaCreated[index];
+          match.timestamp = this.character.achievements.criteriaTimestamp[index];
 
-          this.matchedCriteria.push({
-            id: criteriaId,
-            quantity: criteriaQuantity,
-            created: criteriaCreated,
-            timestamp: criteriaTimestamp,
-            criteria: criteria
-          });
-
-          if (criteriaQuantity === criteria.max) {
-            this.completed = true;
+          if (match.quantity === criteria.max) {
+            matchedCriteria += 1;
           }
         }
       }
+    }
+
+    if (matchedCriteria === this.achievement.criteria.length) {
+      this.completed = true;
     }
 
     //   for (const entry of this.character.achievements.criteria) {

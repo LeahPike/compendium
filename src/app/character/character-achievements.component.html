@@ -21,10 +21,15 @@
         <div class="small">
           {{ achievement.description }}
         </div>
-        <div *ngFor="let criteria of achievement.criteria" class="small text-muted bg-dark mt-1 p-1">
-          <div>id: {{ criteria.id }}</div>
-          <div>max: {{ criteria.max }}</div>
-          <div>{{ criteria.description }}</div>
+        <div>
+          <img [title]="achievement.title" class="py-1"
+               [src]="'http://media.blizzard.com/wow/icons/36/' + achievement.icon + '.jpg'">
+        </div>
+        <div class="small">
+          Account Wide: {{ achievement.accountWide }}
+        </div>
+        <div class="small">
+          Points: {{ achievement.points }}
         </div>
       </td>
       <td *ngFor="let character of characters" class="text-center">
