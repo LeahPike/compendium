@@ -60,11 +60,11 @@ export class BattleNetService {
     );
   }
 
-  getCharacter(realm: string, name: string): Observable<Character> {
+  getCharacter(character: string): Observable<Character> {
     return new Observable<Character>((observer) => {
         const fields = 'fields=professions+quests+talents+feed+achievements';
-        const url = this.baseUrl + '/character/' + realm + '/' + name + '?' + fields + '&' + this.apiKey;
-        this.getData(realm + '/' + name, url).subscribe((result: Character) => {
+        const url = this.baseUrl + '/character/' + character + '?' + fields + '&' + this.apiKey;
+        this.getData(character, url).subscribe((result: Character) => {
 
           // https://dev.battle.net/docs/read/community_apis/world_of_warcraft/Character_Renders
           result.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'insert');

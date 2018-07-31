@@ -3,8 +3,10 @@ import {Race} from '../data/race';
 import {Class} from '../data/class';
 import {Character} from '../data/character';
 import {BattleNetService} from './battle-net.service';
-import {forkJoin} from 'rxjs/observable/forkJoin';
 import {Achievement} from '../data/achievement';
+
+import 'rxjs/add/observable/forkJoin';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class GameDataService {
@@ -18,34 +20,45 @@ export class GameDataService {
 
     console.log('GameDataService', 'constructor');
 
-    forkJoin(
-
+    Observable.forkJoin(
       // load  base data
       this.battleNetService.getClasses(),
-      this.battleNetService.getRaces(),
-      //this.battleNetService.getAchievements()
-
+      this.battleNetService.getRaces()
     ).subscribe(([classes, races]) => {
 
       this.classes = classes;
       this.races = races;
       // this.achievements = achievements;
 
-      this.battleNetService.getCharacter('azjol-nerub', 'asumi').subscribe((result: Character) => this.characters.push(result));
-      // this.battleNetService.getCharacter('azjol-nerub', 'sameera').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'lexiss').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'livana').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'mayara').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'salus').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'sheeta').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'siasan').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'snowise').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'sunzie').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'talah').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'valiah').subscribe((result: Character) => this.characters.push(result));
-      this.battleNetService.getCharacter('azjol-nerub', 'zirelle').subscribe((result: Character) => this.characters.push(result));
-      // this.battleNetService.getCharacter('khadgar', 'Zyrin').subscribe((result: Character) => this.characters.push(result));
+      const myCharacters = [];
+      myCharacters.push('azjol-nerub/asumi');
+      myCharacters.push('azjol-nerub/lexiss');
+      myCharacters.push('azjol-nerub/livana');
+      myCharacters.push('azjol-nerub/mayara');
+      myCharacters.push('azjol-nerub/salus');
+      myCharacters.push('azjol-nerub/sheeta');
+      myCharacters.push('azjol-nerub/siasan');
+      myCharacters.push('azjol-nerub/snowise');
+      myCharacters.push('azjol-nerub/sunzie');
+      myCharacters.push('azjol-nerub/talah');
+      myCharacters.push('azjol-nerub/valiah');
+      myCharacters.push('azjol-nerub/zirelle');
 
+      // myCharacters.push ('azjol-nerub/sameera');
+      // myCharacters.push ('khadgar/Zyrin');
+
+      const observableBatch = [];
+      for (const character of myCharacters) {
+        observableBatch.push(this.battleNetService.getCharacter(character));
+      }
+      Observable.forkJoin(observableBatch).subscribe((result: Character[]) => {
+        for (const entry of result) {
+          this.characters.push(entry);
+        }
+        // sort characters by achievement points
+        this.characters
+          .sort((a, b) => a.achievementPoints < b.achievementPoints ? 1 : a.achievementPoints > b.achievementPoints ? -1 : 0);
+      });
 
     });
   }

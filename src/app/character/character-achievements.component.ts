@@ -20,20 +20,21 @@ export class CharacterAchievementsComponent implements OnInit {
 
     this.characters = this.gameDataService.characters;
 
-    // Arsenal of Power
-    this.battleNetService.getAchievement(11171).subscribe((result) => this.achievements.push(result));
+    // Breaking the Sound Barrier
+    this.battleNetService.getAchievement(5180).subscribe((result) => this.achievements.push(result));
 
     // Level 110
     this.battleNetService.getAchievement(10671).subscribe((result) => this.achievements.push(result));
 
-    // Insurrection
-    this.battleNetService.getAchievement(11340).subscribe((result) => this.achievements.push(result));
+    // Arsenal of Power
+    this.battleNetService.getAchievement(11171).subscribe((result) => this.achievements.push(result));
 
     // Fighting with Style: Classic
     this.battleNetService.getAchievement(10461).subscribe((result) => this.achievements.push(result));
 
     // A Glorious Campaign
     this.battleNetService.getAchievement(10994).subscribe((result) => this.achievements.push(result));
+
   }
 
 }

@@ -14,22 +14,18 @@
   </tr>
   <ng-template ngFor let-achievement [ngForOf]="achievements">
     <tr>
-      <td>
-        <div>
-          {{ achievement.title }}
-        </div>
-        <div class="small">
-          {{ achievement.description }}
-        </div>
-        <div>
-          <img [title]="achievement.title" class="py-1"
-               [src]="'http://media.blizzard.com/wow/icons/36/' + achievement.icon + '.jpg'">
-        </div>
-        <div class="small">
-          Account Wide: {{ achievement.accountWide }}
-        </div>
-        <div class="small">
-          Points: {{ achievement.points }}
+      <td class="small">
+        <div class="d-flex flex-row">
+          <div>
+            <img [title]="achievement.title" class="pr-2"
+                 [src]="'http://media.blizzard.com/wow/icons/36/' + achievement.icon + '.jpg'">
+          </div>
+          <div>
+            {{ achievement.title }}
+            <div class="text-secondary">
+              {{ achievement.description }}
+            </div>
+          </div>
         </div>
       </td>
       <td *ngFor="let character of characters" class="text-center">
