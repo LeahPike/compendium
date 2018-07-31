@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Character} from '../data/character';
 import {Achievement} from '../data/achievement';
 import {AchievementCriteria} from '../data/achievement-criteria';
+import {createOptional} from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-character-achievement',
@@ -18,57 +19,48 @@ export class CharacterAchievementComponent implements OnInit {
 
   completed = false;
 
-  matchedCriteria: { id: number, quantity: number, created: number, timestamp: number, criteria: AchievementCriteria }[] = [];
+  criteria: { id: number, quantity: number, created: number, timestamp: number, criteria: AchievementCriteria }[] = [];
 
   ngOnInit() {
 
-    let matchedCriteria = 0;
-
-    for (const criteria of this.achievement.criteria) {
-
-      const match = {
-        id: criteria.id,
-        quantity: null,
-        created: null,
-        timestamp: null,
-        criteria: criteria
-      };
-
-      this.matchedCriteria.push(match);
-
-      for (let index = 0; index < this.character.achievements.criteria.length; index++) {
-
-        if (criteria.id === this.character.achievements.criteria[index]) {
-
-          match.quantity = this.character.achievements.criteriaQuantity[index];
-          match.created = this.character.achievements.criteriaCreated[index];
-          match.timestamp = this.character.achievements.criteriaTimestamp[index];
-
-          if (match.quantity === criteria.max) {
-            matchedCriteria += 1;
-          }
-        }
+    // if the character has the achievement in it's achievementsCompleted collection mark it as completed
+    for (const entry of this.character.achievements.achievementsCompleted) {
+      if (entry === this.achievement.id) {
+        this.completed = true;
       }
     }
 
-    if (matchedCriteria === this.achievement.criteria.length) {
-      this.completed = true;
-    }
+    // if there is only one criteria, then we don't need to list the criteria
+    if (this.achievement.criteria.length > 1) {
 
-    //   for (const entry of this.character.achievements.criteria) {
-    //
-    //
-    //   if (this.achievement.criteria.find((e) => e.id === entry)) {
-    //
-    //     console.log(this.character.name, this.achievement.title, this.achievement.criteria, entry);
-    //     this.completed = true;
-    //   }
-    // }
+      // loop through the criteria for the achievement
+      for (const criteria of this.achievement.criteria) {
 
-    for (const entry of this.character.achievements.achievementsCompleted) {
-      if (entry === this.achievement.id) {
-        // this.completed = true;
-        // console.log(this.achievementId, this.character.name, this.character.achievements.criteria);
+        // we cannot hope to match criteria without an id, so ignore it
+        if (criteria.id !== 0) {
+
+          const match = {
+            id: criteria.id,
+            quantity: null,
+            created: null,
+            timestamp: null,
+            criteria: criteria
+          };
+
+          this.criteria.push(match);
+
+          for (let index = 0; index < this.character.achievements.criteria.length; index++) {
+
+            if (criteria.id === this.character.achievements.criteria[index]) {
+
+              match.quantity = this.character.achievements.criteriaQuantity[index];
+              match.created = this.character.achievements.criteriaCreated[index];
+              match.timestamp = this.character.achievements.criteriaTimestamp[index];
+
+
+            }
+          }
+        }
       }
     }
   }
