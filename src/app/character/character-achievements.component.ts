@@ -35,6 +35,15 @@ export class CharacterAchievementsComponent implements OnInit {
     // A Glorious Campaign
     this.battleNetService.getAchievement(10994).subscribe((result) => this.achievements.push(result));
 
+    // Legendary Research
+    this.battleNetService.getAchievement(11223).subscribe((result) => this.achievements.push(result));
+
+    // Improving on History
+    this.battleNetService.getAchievement(10459).subscribe((result) => this.achievements.push(result));
+
+    // A Classy Outfit
+    this.battleNetService.getAchievement(11298).subscribe((result) => this.achievements.push(result));
+
   }
 
 }

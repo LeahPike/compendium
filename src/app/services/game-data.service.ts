@@ -52,6 +52,7 @@ export class GameDataService {
         observableBatch.push(this.battleNetService.getCharacter(character));
       }
       Observable.forkJoin(observableBatch).subscribe((result: Character[]) => {
+
         for (const entry of result) {
           this.characters.push(entry);
         }
