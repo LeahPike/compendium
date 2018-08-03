@@ -1,11 +1,13 @@
 <table class="table table-dark table-striped">
-  <tbody>
+  <thead>
   <tr>
     <td></td>
     <td *ngFor="let character of characters" class="text-center">
       <app-character-avatar [character]="character"></app-character-avatar>
     </td>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td></td>
     <td *ngFor="let character of characters" class="text-center">

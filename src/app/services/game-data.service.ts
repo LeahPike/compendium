@@ -11,15 +11,20 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class GameDataService {
 
+  achievements: Achievement[] = [];
   characters: Character[] = [];
   classes: Class[] = [];
   races: Race[] = [];
-  achievements: Achievement[];
 
   constructor(private battleNetService: BattleNetService) {
 
     console.log('GameDataService', 'constructor');
 
+    this.loadCharacters();
+    this.loadAchievements();
+  }
+
+  loadCharacters() {
     Observable.forkJoin(
       // load  base data
       this.battleNetService.getClasses(),
@@ -62,6 +67,30 @@ export class GameDataService {
       });
 
     });
+  }
+
+  loadAchievements() {
+
+      const achievements = [];
+      achievements.push(5180); // Breaking the Sound Barrier
+      achievements.push(10671); // Level 110
+      achievements.push(11171); // Arsenal of Power
+      achievements.push(10461); // Fighting with Style: Classic
+      achievements.push(10994); // A Glorious Campaign
+      achievements.push(11223); // Legendary Research
+      achievements.push(10459); // Improving on History
+      achievements.push(11298); // A Classy Outfit
+      achievements.push(11546); // Breaching the Tomb
+
+      const observableBatch = [];
+      for (const achievement of achievements) {
+        observableBatch.push(this.battleNetService.getAchievement(achievement));
+      }
+      Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
+        for (const entry of result) {
+          this.achievements.push(entry);
+        }
+      });
   }
 
   findClass(id: number): Class {
