@@ -3,10 +3,10 @@ import {Character} from '../data/character';
 import {GameDataService} from '../services/game-data.service';
 
 @Component({
-  selector: 'app-character-insert',
-  templateUrl: './character-inset.component.html'
+  selector: 'app-character-avatar',
+  templateUrl: './character-avatar.component.html'
 })
-export class CharacterInsetComponent implements OnInit {
+export class CharacterAvatarComponent implements OnInit {
 
   @Input()
   character: Character;
