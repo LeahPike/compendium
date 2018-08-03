@@ -1,8 +1,7 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Character} from '../data/character';
-import {Achievement} from '../data/achievement';
-import {AchievementCriteria} from '../data/achievement-criteria';
-import {createOptional} from '@angular/compiler/src/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Character} from '../../data/character';
+import {Achievement} from '../../data/achievement';
+import {AchievementCriteria} from '../../data/achievement-criteria';
 
 @Component({
   selector: 'app-character-achievement',

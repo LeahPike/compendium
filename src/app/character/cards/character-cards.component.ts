@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {GameDataService} from '../services/game-data.service';
-import {Class} from '../data/class';
-import {Character} from '../data/character';
-import {Race} from '../data/race';
+import {GameDataService} from '../../services/game-data.service';
+import {Class} from '../../data/class';
+import {Character} from '../../data/character';
+import {Race} from '../../data/race';
 
 @Component({
   selector: 'app-character-cards',

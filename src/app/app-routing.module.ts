@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CharacterAchievementsComponent} from './character/character-achievements.component';
-import {CharacterCardsComponent} from './character/character-cards.component';
-import {CharacterProfessionsComponent} from './character/character-professions.component';
+import {CharacterAchievementsComponent} from './character/achievements/character-achievements.component';
+import {CharacterCardsComponent} from './character/cards/character-cards.component';
+import {CharacterProfessionsComponent} from './character/professions/character-professions.component';
 
 const routes: Routes = [
   {

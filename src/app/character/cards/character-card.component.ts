@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Character} from '../data/character';
-import {GameDataService} from '../services/game-data.service';
-import {Class} from '../data/class';
-import {Race} from '../data/race';
+import {Character} from '../../data/character';
+import {GameDataService} from '../../services/game-data.service';
+import {Class} from '../../data/class';
+import {Race} from '../../data/race';
 
 @Component({
   selector: 'app-character-card',

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {GameDataService} from '../services/game-data.service';
-import {Character} from '../data/character';
+import {GameDataService} from '../../services/game-data.service';
+import {Character} from '../../data/character';
 
 @Component({
   selector: 'app-professions-list',
