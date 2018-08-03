@@ -84,6 +84,8 @@ export class GameDataService {
     switch (classNumber) {
       case 6: // Death Knight
         return '#C41F3B';
+      case 12: // Demon Hunter
+        return '#A330C9';
       case 11: // Druid
         return '#FF7D0A';
       case 3: // Hunter
