@@ -44,6 +44,8 @@ export class CharacterAchievementsComponent implements OnInit {
     // A Classy Outfit
     this.battleNetService.getAchievement(11298).subscribe((result) => this.achievements.push(result));
 
+    // Breaching the Tomb
+    this.battleNetService.getAchievement(11546).subscribe((result) => this.achievements.push(result));
   }
 
 }
