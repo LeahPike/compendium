@@ -1,20 +1,26 @@
 <table class="table table-dark table-striped">
-  <tbody>
-  <tr *ngFor="let character of characters">
-    <td>
+  <thead>
+  <tr>
+    <td *ngFor="let character of characters" class="text-center">
       <app-character-avatar [character]="character"></app-character-avatar>
     </td>
-    <td>
-      <table>
-        <tr>
-          <td *ngFor="let profession of character.professions.primary" class="p-1">
-            <app-character-profession [profession]="profession"></app-character-profession>
-          </td>
-          <td *ngFor="let profession of character.professions.secondary" class="p-1">
-            <app-character-profession [profession]="profession"></app-character-profession>
-          </td>
-        </tr>
-      </table>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td *ngFor="let character of characters">
+      <div *ngFor="let profession of character.professions.primary">
+        <div *ngIf="profession.max == 300" class="p-1">
+          <app-character-profession [profession]="profession"></app-character-profession>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td *ngFor="let character of characters">
+      <div *ngFor="let profession of character.professions.secondary" class="p-1">
+        <app-character-profession [profession]="profession"></app-character-profession>
+      </div>
     </td>
   </tr>
   </tbody>
