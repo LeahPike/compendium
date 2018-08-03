@@ -22,9 +22,6 @@ import {CharacterAchievementComponent} from './character-achievement.component';
     CharacterAvatarComponent
   ],
   exports: [
-    CharacterCardsComponent,
-    CharacterAchievementsComponent,
-    CharacterProfessionsComponent
   ]
 })
 export class CharacterModule {
