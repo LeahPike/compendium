@@ -58,8 +58,20 @@ export class GameDataService {
       }
       Observable.forkJoin(observableBatch).subscribe((result: Character[]) => {
 
-        for (const entry of result) {
-          this.characters.push(entry);
+        for (const character of result) {
+
+          // https://dev.battle.net/docs/read/community_apis/world_of_warcraft/Character_Renders
+          character.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'insert');
+          character.imageMain = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'main');
+          character.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail;
+
+          character.professions.primary
+            .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
+          character.professions.secondary
+            .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
+          this.characters.push(character);
         }
         // sort characters by achievement points
         this.characters
@@ -87,8 +99,8 @@ export class GameDataService {
         observableBatch.push(this.battleNetService.getAchievement(achievement));
       }
       Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
-        for (const entry of result) {
-          this.achievements.push(entry);
+        for (const achievement of result) {
+          this.achievements.push(achievement);
         }
       });
   }

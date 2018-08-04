@@ -1,4 +1,5 @@
 import {CharacterAchievements} from './character-achievements';
+import {CharacterProfessions} from './character-professions';
 
 export interface Character {
 
@@ -17,6 +18,7 @@ export interface Character {
   totalHonorableKills: number; // 9267
 
   achievements: CharacterAchievements;
+  professions: CharacterProfessions;
 
   // custom
   imageMain: string;

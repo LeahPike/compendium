@@ -65,12 +65,6 @@ export class BattleNetService {
         const fields = 'fields=professions+quests+talents+feed+achievements';
         const url = this.baseUrl + '/character/' + character + '?' + fields + '&' + this.apiKey;
         this.getData(character, url).subscribe((result: Character) => {
-
-          // https://dev.battle.net/docs/read/community_apis/world_of_warcraft/Character_Renders
-          result.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'insert');
-          result.imageMain = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail.replace('avatar', 'main');
-          result.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + result.thumbnail;
-
           observer.next(result);
           observer.complete();
         });

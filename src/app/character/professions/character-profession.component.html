@@ -2,7 +2,7 @@
      [src]="'http://media.blizzard.com/wow/icons/18/inv_misc_questionmark.jpg'">
 <img *ngIf="profession.icon" [title]="profession.name"
      [src]="'http://media.blizzard.com/wow/icons/18/' + profession.icon + '.jpg'">
-{{ profession.name }}
+<span>{{ profession.name }}</span>
 
 <!--<progress class="progress progress-warning" value="{{profession.rank}}" [max]="profession.max">-->
 <!--{{profession.rank}}-->
