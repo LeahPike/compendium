@@ -42,6 +42,7 @@ export class GameDataService {
       myCharacters.push('azjol-nerub/lexiss');
       myCharacters.push('azjol-nerub/livana');
       myCharacters.push('azjol-nerub/mayara');
+      myCharacters.push('azjol-nerub/sameera');
       myCharacters.push('azjol-nerub/salus');
       myCharacters.push('azjol-nerub/sheeta');
       myCharacters.push('azjol-nerub/siasan');
@@ -87,6 +88,7 @@ export class GameDataService {
 
     const achievements = [];
     achievements.push(12918); // Have a Heart
+    achievements.push(12582); // Come Sail Away
     achievements.push(12544); // Level 120
 
     const observableBatch = [];

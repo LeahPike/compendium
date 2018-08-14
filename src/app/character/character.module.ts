@@ -9,11 +9,13 @@ import {CharacterProfessionComponent} from './professions/character-profession.c
 import {CharacterProfessionsComponent} from './professions/character-professions.component';
 import {CharacterAchievementsLegionComponent} from './achievements/character-achievements-legion.component';
 import {CharacterAchievementsBFAComponent} from './achievements/character-achievements-bfa.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   declarations: [
     CharacterAvatarComponent,
