@@ -1,18 +1,28 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CharacterAchievementsComponent} from './character/achievements/character-achievements.component';
 import {CharacterCardsComponent} from './character/cards/character-cards.component';
 import {CharacterProfessionsComponent} from './character/professions/character-professions.component';
+import {CharacterAchievementsBFAComponent} from './character/achievements/character-achievements-bfa.component';
+import {CharacterAchievementsLegionComponent} from './character/achievements/character-achievements-legion.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/characters',
+    redirectTo: 'characters',
     pathMatch: 'full'
   },
   {
     path: 'achievements',
-    component: CharacterAchievementsComponent
+    redirectTo: 'achievements/bfa',
+    pathMatch: 'full'
+  },
+  {
+    path: 'achievements/bfa',
+    component: CharacterAchievementsBFAComponent
+  },
+  {
+    path: 'achievements/legion',
+    component: CharacterAchievementsLegionComponent
   },
   {
     path: 'characters',

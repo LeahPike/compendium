@@ -11,7 +11,8 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class GameDataService {
 
-  achievements: Achievement[] = [];
+  achievementsLegion: Achievement[] = [];
+  achievementsBFA: Achievement[] = [];
   characters: Character[] = [];
   classes: Class[] = [];
   races: Race[] = [];
@@ -21,7 +22,8 @@ export class GameDataService {
     console.log('GameDataService', 'constructor');
 
     this.loadCharacters();
-    this.loadAchievements();
+    this.loadAchievementsLegion();
+    this.loadAchievementsBFA();
   }
 
   loadCharacters() {
@@ -81,10 +83,26 @@ export class GameDataService {
     });
   }
 
-  loadAchievements() {
+  loadAchievementsBFA() {
+
+    const achievements = [];
+    achievements.push(12918); // Have a Heart
+    achievements.push(12544); // Level 120
+
+    const observableBatch = [];
+    for (const achievement of achievements) {
+      observableBatch.push(this.battleNetService.getAchievement(achievement));
+    }
+    Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
+      for (const achievement of result) {
+        this.achievementsBFA.push(achievement);
+      }
+    });
+  }
+
+  loadAchievementsLegion() {
 
       const achievements = [];
-      achievements.push(5180); // Breaking the Sound Barrier
       achievements.push(10671); // Level 110
       achievements.push(11171); // Arsenal of Power
       achievements.push(10461); // Fighting with Style: Classic
@@ -100,7 +118,7 @@ export class GameDataService {
       }
       Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
         for (const achievement of result) {
-          this.achievements.push(achievement);
+          this.achievementsLegion.push(achievement);
         }
       });
   }

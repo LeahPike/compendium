@@ -8,7 +8,7 @@ import {Achievement} from '../../data/achievement';
   selector: 'app-character-achievements',
   templateUrl: './character-achievements.component.html'
 })
-export class CharacterAchievementsComponent implements OnInit {
+export class CharacterAchievementsLegionComponent implements OnInit {
 
   characters: Character[] = [];
   achievements: Achievement[] = [];
@@ -19,7 +19,7 @@ export class CharacterAchievementsComponent implements OnInit {
   ngOnInit() {
 
     this.characters = this.gameDataService.characters;
-    this.achievements = this.gameDataService.achievements;
+    this.achievements = this.gameDataService.achievementsLegion;
   }
 
 }

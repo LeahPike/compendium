@@ -3,11 +3,12 @@ import {CommonModule} from '@angular/common';
 
 import {CharacterAvatarComponent} from './character-avatar.component';
 import {CharacterAchievementComponent} from './achievements/character-achievement.component';
-import {CharacterAchievementsComponent} from './achievements/character-achievements.component';
 import {CharacterCardsComponent} from './cards/character-cards.component';
 import {CharacterCardComponent} from './cards/character-card.component';
 import {CharacterProfessionComponent} from './professions/character-profession.component';
 import {CharacterProfessionsComponent} from './professions/character-professions.component';
+import {CharacterAchievementsLegionComponent} from './achievements/character-achievements-legion.component';
+import {CharacterAchievementsBFAComponent} from './achievements/character-achievements-bfa.component';
 
 
 @NgModule({
@@ -16,8 +17,9 @@ import {CharacterProfessionsComponent} from './professions/character-professions
   ],
   declarations: [
     CharacterAvatarComponent,
+    CharacterAchievementsLegionComponent,
+    CharacterAchievementsBFAComponent,
     CharacterAchievementComponent,
-    CharacterAchievementsComponent,
     CharacterCardComponent,
     CharacterCardsComponent,
     CharacterProfessionComponent,
