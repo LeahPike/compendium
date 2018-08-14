@@ -32,5 +32,9 @@ export class IconDirective implements OnChanges {
     } else {
       this.image.src = baseUrl + 'inv_misc_questionmark.jpg';
     }
+
+    this.image.classList.add('border');
+    this.image.classList.add('border-secondary');
+    this.image.classList.add('rounded');
   }
 }

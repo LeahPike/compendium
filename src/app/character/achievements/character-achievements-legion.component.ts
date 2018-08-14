@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Character} from '../../data/character';
 import {GameDataService} from '../../services/game-data.service';
-import {BattleNetService} from '../../services/battle-net.service';
 import {Achievement} from '../../data/achievement';
 
 @Component({
@@ -13,7 +12,7 @@ export class CharacterAchievementsLegionComponent implements OnInit {
   characters: Character[] = [];
   achievements: Achievement[] = [];
 
-  constructor(private gameDataService: GameDataService, private battleNetService: BattleNetService) {
+  constructor(private gameDataService: GameDataService) {
   }
 
   ngOnInit() {
