@@ -19,8 +19,10 @@
       <td class="small">
         <div class="d-flex flex-row">
           <div>
-            <img [title]="achievement.title" class="mr-2"
-                 [appIcon]="achievement.icon" size="36">
+            <a [href]="'https://www.wowhead.com/achievement=' + achievement.id" target="_blank">
+              <img [title]="achievement.title" class="mr-2"
+                   [appIcon]="achievement.icon" size="36">
+            </a>
           </div>
           <div>
             {{ achievement.title }}
