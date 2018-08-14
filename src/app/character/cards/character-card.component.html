@@ -7,7 +7,7 @@
       <span class="float-right text-capitalize">{{ race.side }}</span>
     </div>
     <div>
-      <span>{{ character.talents[0].spec.name }} <img class="rounded py-1" [src]="'http://media.blizzard.com/wow/icons/18/' + character.talents[0].spec.icon + '.jpg'" [title]="character.talents[0].spec.name"></span>
+      <span>{{ character.talents[0].spec.name }} <img class="rounded my-1" [appIcon]="character.talents[0].spec.icon" size="18" [title]="character.talents[0].spec.name"></span>
       <span class="float-right">{{ race.name }}</span>
     </div>
 </div>
