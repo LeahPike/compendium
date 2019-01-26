@@ -10,7 +10,7 @@
   <tr>
     <td *ngFor="let character of characters">
       <div *ngFor="let profession of character.professions.primary">
-        <div *ngIf="profession.max == 300" class="p-1">
+        <div class="p-1">
           <app-character-profession [profession]="profession"></app-character-profession>
         </div>
       </div>

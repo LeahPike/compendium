@@ -1,7 +1,8 @@
-<img [title]="profession.name" [appIcon]="profession.icon" size="18">
-<span>{{ profession.name }}</span>
-
-<!--<progress class="progress progress-warning" value="{{profession.rank}}" [max]="profession.max">-->
-<!--{{profession.rank}}-->
-<!--</progress>-->
-
+<div class="small">
+  <img [title]="profession.name" [appIcon]="profession.icon" size="18"> ({{ profession.rank }}/{{ profession.max }})
+  <div>{{ profession.name }}</div>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" [ngStyle]="{'width': progressPercentage + '%'}"
+         [attr.aria-valuenow]="profession.rank" aria-valuemin="1" [attr.aria-valuemax]="profession.max"></div>
+  </div>
+</div>

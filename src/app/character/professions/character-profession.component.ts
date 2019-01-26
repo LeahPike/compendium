@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {GameDataService} from '../../services/game-data.service';
 import {Profession} from '../../data/profession';
 
@@ -6,13 +6,17 @@ import {Profession} from '../../data/profession';
   selector: 'app-character-profession',
   templateUrl: './character-profession.component.html'
 })
-export class CharacterProfessionComponent {
+export class CharacterProfessionComponent implements OnInit{
 
   @Input()
   profession: Profession;
 
-  constructor(private gameDataService: GameDataService) {
+  progressPercentage: number;
 
+  constructor(private gameDataService: GameDataService) {
   }
 
+  ngOnInit() {
+    this.progressPercentage = Math.round(100 / this.profession.max * this.profession.rank);
+  }
 }

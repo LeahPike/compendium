@@ -21,9 +21,11 @@ export class GameDataService {
 
     console.log('GameDataService', 'constructor');
 
-    this.loadCharacters();
-    this.loadAchievementsLegion();
-    this.loadAchievementsBFA();
+    this.battleNetService.getToken().subscribe((token) => {
+      this.loadCharacters();
+      this.loadAchievementsLegion();
+      this.loadAchievementsBFA();
+    });
   }
 
   loadCharacters() {
@@ -47,7 +49,7 @@ export class GameDataService {
       myCharacters.push('azjol-nerub/sheeta');
       myCharacters.push('azjol-nerub/siasan');
       myCharacters.push('azjol-nerub/snowise');
-      myCharacters.push('azjol-nerub/sunzie');
+      // myCharacters.push('azjol-nerub/sunzie');
       myCharacters.push('azjol-nerub/talah');
       myCharacters.push('azjol-nerub/valiah');
       myCharacters.push('azjol-nerub/zirelle');
@@ -104,25 +106,25 @@ export class GameDataService {
 
   loadAchievementsLegion() {
 
-      const achievements = [];
-      achievements.push(10671); // Level 110
-      achievements.push(11171); // Arsenal of Power
-      achievements.push(10461); // Fighting with Style: Classic
-      achievements.push(10994); // A Glorious Campaign
-      achievements.push(11223); // Legendary Research
-      achievements.push(10459); // Improving on History
-      achievements.push(11298); // A Classy Outfit
-      achievements.push(11546); // Breaching the Tomb
+    const achievements = [];
+    achievements.push(10671); // Level 110
+    achievements.push(11171); // Arsenal of Power
+    achievements.push(10461); // Fighting with Style: Classic
+    achievements.push(10994); // A Glorious Campaign
+    achievements.push(11223); // Legendary Research
+    achievements.push(10459); // Improving on History
+    achievements.push(11298); // A Classy Outfit
+    achievements.push(11546); // Breaching the Tomb
 
-      const observableBatch = [];
-      for (const achievement of achievements) {
-        observableBatch.push(this.battleNetService.getAchievement(achievement));
+    const observableBatch = [];
+    for (const achievement of achievements) {
+      observableBatch.push(this.battleNetService.getAchievement(achievement));
+    }
+    Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
+      for (const achievement of result) {
+        this.achievementsLegion.push(achievement);
       }
-      Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
-        for (const achievement of result) {
-          this.achievementsLegion.push(achievement);
-        }
-      });
+    });
   }
 
   findClass(id: number): Class {
