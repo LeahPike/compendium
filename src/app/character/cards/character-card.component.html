@@ -1,6 +1,6 @@
 <div class="card bg-dark">
   <img class="card-img-top" [src]="character.imageMain">
-  <div class="card-img-overlay d-flex flex-column">
+  <div class="card-img-overlay d-flex flex-column p-2">
 
     <div class="row">
 
@@ -14,16 +14,24 @@
 
     </div>
 
-    <div class="row mt-auto">
+    <div class="row mt-auto small">
 
-      <div class="col-6">
-        <span class="text-capitalize">{{ race.side }}</span> {{ race.name }}
+      <div class="col-6 text-capitalize">
+        {{ race.side }}
       </div>
 
       <div class="col-6 text-right">
-        {{ character.talents[0].spec?.name }} {{ class.name }}
+        {{ character.talents[0].spec?.name }}
         <!--<img class="rounded my-1" [appIcon]="character.talents[0].spec.icon" size="36"-->
         <!--[title]="character.talents[0].spec.name">-->
+      </div>
+
+      <div class="col-6">
+        {{ race.name }}
+      </div>
+
+      <div class="col-6 text-right">
+         {{ class.name }}
       </div>
 
     </div>
