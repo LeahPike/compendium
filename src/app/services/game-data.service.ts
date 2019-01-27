@@ -18,9 +18,6 @@ export class GameDataService {
   races: Race[] = [];
 
   constructor(private battleNetService: BattleNetService) {
-
-    console.log('GameDataService', 'constructor');
-
     this.battleNetService.getToken().subscribe((token) => {
       this.loadCharacters();
       this.loadAchievementsLegion();
@@ -44,7 +41,7 @@ export class GameDataService {
       myCharacters.push('azjol-nerub/lexiss');
       myCharacters.push('azjol-nerub/livana');
       myCharacters.push('azjol-nerub/mayara');
-      myCharacters.push('azjol-nerub/sameera');
+      // myCharacters.push('azjol-nerub/sameera');
       myCharacters.push('azjol-nerub/salus');
       myCharacters.push('azjol-nerub/sheeta');
       myCharacters.push('azjol-nerub/siasan');
@@ -54,8 +51,8 @@ export class GameDataService {
       myCharacters.push('azjol-nerub/valiah');
       myCharacters.push('azjol-nerub/zirelle');
 
-      // myCharacters.push ('azjol-nerub/sameera');
-      // myCharacters.push ('khadgar/Zyrin');
+      // myCharacters.push('khadgar/kirah');
+      // myCharacters.push('khadgar/Zyrin');
 
       const observableBatch = [];
       for (const character of myCharacters) {
@@ -66,9 +63,12 @@ export class GameDataService {
         for (const character of result) {
 
           // https://dev.battle.net/docs/read/community_apis/world_of_warcraft/Character_Renders
-          character.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'insert');
+
+          const alt = '/wow/static/images/2d/avatar/' + character.race + '-' + character.gender + '.jpg';
+
+          character.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'inset');
           character.imageMain = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'main');
-          character.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail;
+          character.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail + '?alt=' + alt;
 
           character.professions.primary
             .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
@@ -133,6 +133,8 @@ export class GameDataService {
         return entry;
       }
     }
+
+    return null;
   }
 
   findRace(id: number): Race {
@@ -143,7 +145,7 @@ export class GameDataService {
       }
     }
 
-    return {id: id, side: 'NOT KNOWN', name: 'NOT KNOWN'};
+    return null;
   }
 
   getClassColour(classNumber: number) {

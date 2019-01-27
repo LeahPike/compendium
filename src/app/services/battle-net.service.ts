@@ -54,17 +54,6 @@ export class BattleNetService {
     );
   }
 
-  // getAchievements(): Observable<Achievement[]> {
-  //   return new Observable<Achievement[]>((observer) => {
-  //       const url = this.baseUrl + '/data/character/achievements?' + this.apiKey;
-  //       this.getData('achievements', url).subscribe((result: Achievements) => {
-  //         observer.next(result.achievements);
-  //         observer.complete();
-  //       });
-  //     }
-  //   );
-  // }
-
   getCharacter(character: string): Observable<Character> {
     return new Observable<Character>((observer) => {
         const fields = 'fields=professions+quests+talents+feed+achievements+class';
@@ -101,6 +90,7 @@ export class BattleNetService {
     return new Observable<any>((observer) => {
 
         if (localStorage.getItem(key) == null) {
+
           const httpOptions = {
             headers: new HttpHeaders({
               'Authorization': 'Bearer ' + this.accessToken
@@ -116,11 +106,13 @@ export class BattleNetService {
           });
 
         } else {
+
           // We already have this data, return it
           const result = JSON.parse(localStorage.getItem(key));
-          console.log('Loaded ' + key + ' from localStorage', result);
+          // console.log('Loaded ' + key + ' from localStorage', result);
           observer.next(result);
           observer.complete();
+
         }
       }
     );

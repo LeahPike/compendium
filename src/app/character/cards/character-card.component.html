@@ -1,13 +1,31 @@
 <div class="card bg-dark">
   <img class="card-img-top" [src]="character.imageMain">
-  <div class="card-img-overlay">
-    <h5>{{ character.name}}<span class="float-right">{{ character.level }}</span></h5>
-    <div class="mt-5 pt-5">
-      <span>{{ class.name }}</span>
-      <span class="float-right text-capitalize">{{ race.side }}</span>
+  <div class="card-img-overlay d-flex flex-column">
+
+    <div class="row">
+
+      <div class="col-6">
+        <h4>{{ character.name}}</h4>
+      </div>
+
+      <div class="col-6 text-right">
+        <h4>{{ character.level}}</h4>
+      </div>
+
     </div>
-    <div>
-      <span>{{ character.talents[0].spec.name }} <img class="rounded my-1" [appIcon]="character.talents[0].spec.icon" size="18" [title]="character.talents[0].spec.name"></span>
-      <span class="float-right">{{ race.name }}</span>
+
+    <div class="row mt-auto">
+
+      <div class="col-6">
+        <span class="text-capitalize">{{ race.side }}</span> {{ race.name }}
+      </div>
+
+      <div class="col-6 text-right">
+        {{ character.talents[0].spec?.name }} {{ class.name }}
+        <!--<img class="rounded my-1" [appIcon]="character.talents[0].spec.icon" size="36"-->
+        <!--[title]="character.talents[0].spec.name">-->
+      </div>
+
     </div>
-</div>
+
+  </div>
