@@ -23,7 +23,7 @@ export class BattleNetService {
 
   getClasses(): Observable<Class[]> {
     return new Observable<Class[]>((observer) => {
-        const url = this.baseUrl + 'data/wow/playable-class/index?' + this.apiKey;
+        const url = this.baseUrl + 'wow/data/character/classes?' + this.apiKey;
         this.getData('classes', url).subscribe((result: Classes) => {
           observer.next(result.classes);
           observer.complete();
@@ -34,23 +34,10 @@ export class BattleNetService {
 
   getRaces(): Observable<Race[]> {
     return new Observable<Race[]>((observer) => {
-        const url = this.baseUrl + 'data/wow/race/index?' + this.apiKey;
+        const url = this.baseUrl + 'wow/data/character/races?' + this.apiKey;
         this.getData('races', url).subscribe((result: Races) => {
-          const observableBatch = [];
-          result.races.forEach((race: any) => {
-            observableBatch.push(this.getData('race', race.key.href));
-          });
-          Observable.forkJoin(observableBatch).subscribe((rawRaces: any[]) => {
-
-            const races = [];
-            rawRaces.forEach((race) => {
-              races.push({id: race.id, name: race.name.en_US, side: race.faction[0].type});
-            });
-            observer.next(races);
-            observer.complete();
-
-          });
-
+          observer.next(result.races);
+          observer.complete();
         });
       }
     );
@@ -112,8 +99,6 @@ export class BattleNetService {
 
   private getData(key: string, url: string): Observable<any> {
     return new Observable<any>((observer) => {
-
-        key = url;
 
         if (localStorage.getItem(key) == null) {
           const httpOptions = {

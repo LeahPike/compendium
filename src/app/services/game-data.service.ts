@@ -49,7 +49,7 @@ export class GameDataService {
       myCharacters.push('azjol-nerub/sheeta');
       myCharacters.push('azjol-nerub/siasan');
       myCharacters.push('azjol-nerub/snowise');
-      // myCharacters.push('azjol-nerub/sunzie');
+      myCharacters.push('azjol-nerub/sunzie');
       myCharacters.push('azjol-nerub/talah');
       myCharacters.push('azjol-nerub/valiah');
       myCharacters.push('azjol-nerub/zirelle');
@@ -136,11 +136,14 @@ export class GameDataService {
   }
 
   findRace(id: number): Race {
+
     for (const entry of this.races) {
       if (id === entry.id) {
         return entry;
       }
     }
+
+    return {id: id, side: 'NOT KNOWN', name: 'NOT KNOWN'};
   }
 
   getClassColour(classNumber: number) {
