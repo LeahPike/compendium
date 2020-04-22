@@ -2,72 +2,28 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Character} from '../data/character';
-import {Class, Classes} from '../data/class';
-import {Race, Races} from '../data/race';
-import {Achievement, Achievements} from '../data/achievement';
+import {CharacterMedia} from '../data/character-media';
+import {CharacterProfessions} from '../data/character-professions';
+import {CharacterProfession} from '../data/character-profession';
+import {CharacterProfessionTier} from '../data/character-profession-tier';
+import {Achievement} from '../data/achievement';
+import {CharacterAchievements} from '../data/character-achievements';
+import {CharacterAchievement} from '../data/character-achievement';
+import {AchievementMedia} from '../data/achievement-media';
 
 @Injectable()
 export class BattleNetService {
 
-  // Avatar: http://render-us.worldofwarcraft.com/character/lightbringer/110/115539310-avatar.jpg
-  // Main: http://render-us.worldofwarcraft.com/character/lightbringer/110/115539310-main.jpg
-  // Inset: http://render-us.worldofwarcraft.com/character/lightbringer/110/115539310-inset.jpg
-
-  private renderUrl = 'http://render-eu.worldofwarcraft.com';
   private baseUrl = 'https://eu.api.blizzard.com/';
-  private apiKey = 'namespace=static-eu&locale=en_GB';
   private accessToken = '';
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getClasses(): Observable<Class[]> {
-    return new Observable<Class[]>((observer) => {
-        const url = this.baseUrl + 'wow/data/character/classes?' + this.apiKey;
-        this.getData('classes', url).subscribe((result: Classes) => {
-          observer.next(result.classes);
-          observer.complete();
-        });
-      }
-    );
-  }
-
-  getRaces(): Observable<Race[]> {
-    return new Observable<Race[]>((observer) => {
-        const url = this.baseUrl + 'wow/data/character/races?' + this.apiKey;
-        this.getData('races', url).subscribe((result: Races) => {
-          observer.next(result.races);
-          observer.complete();
-        });
-      }
-    );
-  }
-
-  getAchievement(achievementId: number): Observable<Achievement> {
-    return new Observable<Achievement>((observer) => {
-        const url = this.baseUrl + 'wow/achievement/' + achievementId + '?' + this.apiKey;
-        this.getData('achievement' + achievementId, url).subscribe((result: Achievement) => {
-          observer.next(result);
-          observer.complete();
-        });
-      }
-    );
-  }
-
-  getCharacter(character: string): Observable<Character> {
-    return new Observable<Character>((observer) => {
-        const fields = 'fields=professions+quests+talents+feed+achievements+class';
-        const url = this.baseUrl + 'wow/character/' + character + '?' + fields + '&' + this.apiKey;
-        this.getData(character, url).subscribe((result: Character) => {
-          observer.next(result);
-          observer.complete();
-        });
-      }
-    );
-  }
-
   getToken(): Observable<any> {
     return new Observable<any>((observer) => {
+
+      // https://develop.battle.net/
       const clientId = '8f8cf4a7f94a4733a09d47addb435041';
       const clientSecret = 'aX1aYNI0rZmrC2U4nnukESOqL4FebOZn';
       const url = 'https://eu.battle.net/oauth/token';
@@ -86,34 +42,145 @@ export class BattleNetService {
     });
   }
 
-  private getData(key: string, url: string): Observable<any> {
-    return new Observable<any>((observer) => {
+  getAchievement(achievementId: string): Observable<Achievement> {
+    return new Observable<Achievement>((observer) => {
 
-        if (localStorage.getItem(key) == null) {
+      if (localStorage.getItem('achievement' + achievementId) == null) {
 
-          const httpOptions = {
-            headers: new HttpHeaders({
-              'Authorization': 'Bearer ' + this.accessToken
-            })
-          };
+        const url = this.baseUrl + 'data/wow/achievement/' + achievementId + '?namespace=static-eu&locale=en_GB';
+        this.getData(url).subscribe((achievement: Achievement) => {
 
-          // We don't have a copy of this data, so fetch it from battle.net
-          this.httpClient.get<any>(url, httpOptions).subscribe((result: any) => {
-            localStorage.setItem(key, JSON.stringify(result));
-            console.log('Loaded ' + key + ' from ' + url, result);
-            observer.next(result);
+          this.getData(achievement.media.key.href).subscribe((achievementMedia: AchievementMedia) => {
+
+            achievement.icon = achievementMedia.assets.find((e) => e.key === 'icon').value;
+
+            // save
+            localStorage.setItem('achievement' + achievementId, JSON.stringify(achievement));
+
+            observer.next(achievement);
             observer.complete();
+
+          });
+        });
+
+      } else {
+        // We already have this data, return it
+        const result = JSON.parse(localStorage.getItem('achievement' + achievementId));
+        observer.next(result);
+        observer.complete();
+      }
+    });
+  }
+
+  getCharacter(realmCharacter: string): Observable<Character> {
+    return new Observable<Character>((observer) => {
+
+        if (localStorage.getItem(realmCharacter) == null) {
+
+          const url = this.baseUrl + 'profile/wow/character/' + realmCharacter + '?namespace=profile-eu&locale=en_GB';
+
+          this.getData(url).subscribe((resultCharacter: Character) => {
+
+            const character = new Character();
+            character.name = resultCharacter.name;
+            character.level = resultCharacter.level;
+            character.faction.name = resultCharacter.faction.name;
+            character.active_spec.name = resultCharacter.active_spec.name;
+            character.race.name = resultCharacter.race.name;
+            character.character_class.name = resultCharacter.character_class.name;
+            character.achievement_points = resultCharacter.achievement_points;
+
+            const observableBatch = [];
+
+            observableBatch.push(this.getData(resultCharacter.media.href));
+            observableBatch.push(this.getData(resultCharacter.professions.href));
+            observableBatch.push(this.getData(resultCharacter.achievements.href));
+
+            Observable.forkJoin(observableBatch).subscribe((result: any[]) => {
+
+              const resultMediaObject: CharacterMedia = result[0];
+              character.mediaObject.bust_url = resultMediaObject.bust_url;
+              character.mediaObject.avatar_url = resultMediaObject.avatar_url;
+
+              const resultProfessionsObject: CharacterProfessions = result[1];
+              for (const resultCharacterProfession of resultProfessionsObject.primaries) {
+
+                const characterProfession = new CharacterProfession();
+                characterProfession.profession.name = resultCharacterProfession.profession.name;
+                character.professionsObject.primaries.push(characterProfession);
+
+                for (const resultCharacterProfessionTier of resultCharacterProfession.tiers) {
+                  const characterProfessionTier = new CharacterProfessionTier();
+                  characterProfessionTier.skill_points = resultCharacterProfessionTier.skill_points;
+                  characterProfessionTier.max_skill_points = resultCharacterProfessionTier.max_skill_points;
+                  characterProfessionTier.tier.name = resultCharacterProfessionTier.tier.name;
+                  characterProfession.tiers.push(characterProfessionTier);
+                }
+              }
+              for (const resultCharacterProfession of resultProfessionsObject.secondaries) {
+
+                const characterProfession = new CharacterProfession();
+                characterProfession.profession.name = resultCharacterProfession.profession.name;
+                character.professionsObject.secondaries.push(characterProfession);
+
+                if (characterProfession.profession.name === 'Archaeology') {
+                  const characterProfessionTier = new CharacterProfessionTier();
+                  characterProfessionTier.skill_points = resultCharacterProfession.skill_points;
+                  characterProfessionTier.max_skill_points = resultCharacterProfession.max_skill_points;
+                  characterProfessionTier.tier.name = resultCharacterProfession.profession.name;
+                  characterProfession.tiers.push(characterProfessionTier);
+                } else {
+                  for (const resultCharacterProfessionTier of resultCharacterProfession.tiers) {
+                    const characterProfessionTier = new CharacterProfessionTier();
+                    characterProfessionTier.skill_points = resultCharacterProfessionTier.skill_points;
+                    characterProfessionTier.max_skill_points = resultCharacterProfessionTier.max_skill_points;
+                    characterProfessionTier.tier.name = resultCharacterProfessionTier.tier.name;
+                    characterProfession.tiers.push(characterProfessionTier);
+                  }
+
+                }
+              }
+
+              const resultAchievementObject: CharacterAchievements = result[2];
+              for (const resultCharacterAchievement of resultAchievementObject.achievements) {
+                const characterAchievement = new CharacterAchievement();
+                characterAchievement.id = resultCharacterAchievement.id;
+                character.achievementsObject.achievements.push(characterAchievement);
+              }
+
+              // save
+              localStorage.setItem(realmCharacter, JSON.stringify(character));
+
+              observer.next(character);
+              observer.complete();
+
+            });
           });
 
         } else {
 
           // We already have this data, return it
-          const result = JSON.parse(localStorage.getItem(key));
-          // console.log('Loaded ' + key + ' from localStorage', result);
+          const result = JSON.parse(localStorage.getItem(realmCharacter));
           observer.next(result);
           observer.complete();
 
         }
+      }
+    );
+  }
+
+  private getData(url: string): Observable<any> {
+    return new Observable<any>((observer) => {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Authorization': 'Bearer ' + this.accessToken
+          })
+        };
+        // We don't have a copy of this data, so fetch it from battle.net
+        this.httpClient.get<any>(url, httpOptions).subscribe((result: any) => {
+          observer.next(result);
+          observer.complete();
+        });
       }
     );
   }

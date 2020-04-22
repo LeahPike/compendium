@@ -1,4 +1,4 @@
-export interface Item {
+export class Item {
   id: number; // 69213,
   name: string; // "Flameward Hippogryph"
   icon: string; // "ability_mount_warhippogryph"

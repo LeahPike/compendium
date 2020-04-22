@@ -1,11 +1,9 @@
 export class Profession {
-  id: number;
-  name: number;
-  icon: string;
-  rank: number;
-  max: number;
 
-  constructor() {
+  id: number; // 186
+  name: string; // Mining
+  key: { href: string };
 
+  constructor () {
   }
 }

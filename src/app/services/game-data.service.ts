@@ -1,6 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Race} from '../data/race';
-import {Class} from '../data/class';
 import {Character} from '../data/character';
 import {BattleNetService} from './battle-net.service';
 import {Achievement} from '../data/achievement';
@@ -14,88 +12,61 @@ export class GameDataService {
   achievementsLegion: Achievement[] = [];
   achievementsBFA: Achievement[] = [];
   characters: Character[] = [];
-  classes: Class[] = [];
-  races: Race[] = [];
 
   constructor(private battleNetService: BattleNetService) {
+
     this.battleNetService.getToken().subscribe((token) => {
+
       this.loadCharacters();
       this.loadAchievementsLegion();
       this.loadAchievementsBFA();
+
     });
   }
 
   loadCharacters() {
-    Observable.forkJoin(
-      // load  base data
-      this.battleNetService.getClasses(),
-      this.battleNetService.getRaces()
-    ).subscribe(([classes, races]) => {
 
-      this.classes = classes;
-      this.races = races;
-      // this.achievements = achievements;
+    const myCharacters = [];
+    myCharacters.push('azjolnerub/asumi');
+    myCharacters.push('azjolnerub/lexiss');
+    myCharacters.push('azjolnerub/livana');
+    myCharacters.push('azjolnerub/mayara');
+    // myCharacters.push('azjolnerub/sameera');
+    myCharacters.push('azjolnerub/salus');
+    myCharacters.push('azjolnerub/sheeta');
+    myCharacters.push('azjolnerub/siasan');
+    myCharacters.push('azjolnerub/snowise');
+    myCharacters.push('azjolnerub/sunzie');
+    myCharacters.push('azjolnerub/talah');
+    myCharacters.push('azjolnerub/valiah');
+    myCharacters.push('azjolnerub/zirelle');
 
-      const myCharacters = [];
-      myCharacters.push('azjol-nerub/asumi');
-      myCharacters.push('azjol-nerub/lexiss');
-      myCharacters.push('azjol-nerub/livana');
-      myCharacters.push('azjol-nerub/mayara');
-      // myCharacters.push('azjol-nerub/sameera');
-      myCharacters.push('azjol-nerub/salus');
-      myCharacters.push('azjol-nerub/sheeta');
-      myCharacters.push('azjol-nerub/siasan');
-      myCharacters.push('azjol-nerub/snowise');
-      myCharacters.push('azjol-nerub/sunzie');
-      myCharacters.push('azjol-nerub/talah');
-      myCharacters.push('azjol-nerub/valiah');
-      myCharacters.push('azjol-nerub/zirelle');
+    // myCharacters.push('khadgar/kirah');
+    // myCharacters.push('khadgar/Zyrin');
 
-      // myCharacters.push('khadgar/kirah');
-      // myCharacters.push('khadgar/Zyrin');
+    for (const character of myCharacters) {
+      // observableBatch.push(this.battleNetService.getCharacter(character));
+      this.loadCharacter(character);
+    }
+  }
 
-      const observableBatch = [];
-      for (const character of myCharacters) {
-        observableBatch.push(this.battleNetService.getCharacter(character));
-      }
-      Observable.forkJoin(observableBatch).subscribe((result: Character[]) => {
-
-        for (const character of result) {
-
-          // https://dev.battle.net/docs/read/community_apis/world_of_warcraft/Character_Renders
-
-          const alt = '/wow/static/images/2d/avatar/' + character.race + '-' + character.gender + '.jpg';
-
-          character.imageInset = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'inset');
-          character.imageMain = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail.replace('avatar', 'main');
-          character.imageAvatar = 'http://render-eu.worldofwarcraft.com/character/' + character.thumbnail + '?alt=' + alt;
-
-          character.professions.primary
-            .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
-
-          character.professions.secondary
-            .sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
-
-          this.characters.push(character);
-        }
-        // sort characters by achievement points
-        this.characters
-          .sort((a, b) => a.achievementPoints < b.achievementPoints ? 1 : a.achievementPoints > b.achievementPoints ? -1 : 0);
-      });
-
+  loadCharacter(value) {
+    this.battleNetService.getCharacter(value).subscribe((character: Character) => {
+      this.characters.push(character);
+      this.characters.sort((a, b) => a.level < b.level ? 1 : a.level > b.level ? -1 : 0);
     });
   }
 
   loadAchievementsBFA() {
 
     const achievements = [];
-    achievements.push(12918); // Have a Heart
-    achievements.push(12582); // Come Sail Away
     achievements.push(12544); // Level 120
+    achievements.push(12582); // Come Sail Away
+    achievements.push(12918); // Have a Heart
 
     const observableBatch = [];
-    for (const achievement of achievements) {
-      observableBatch.push(this.battleNetService.getAchievement(achievement));
+    for (const achievementId of achievements) {
+      observableBatch.push(this.battleNetService.getAchievement(achievementId));
     }
     Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
       for (const achievement of result) {
@@ -127,52 +98,31 @@ export class GameDataService {
     });
   }
 
-  findClass(id: number): Class {
-    for (const entry of this.classes) {
-      if (id === entry.id) {
-        return entry;
-      }
-    }
-
-    return null;
-  }
-
-  findRace(id: number): Race {
-
-    for (const entry of this.races) {
-      if (id === entry.id) {
-        return entry;
-      }
-    }
-
-    return null;
-  }
-
-  getClassColour(classNumber: number) {
-    switch (classNumber) {
-      case 6: // Death Knight
+  getClassColour(className: string) {
+    switch (className) {
+      case 'Death Knight':
         return '#C41F3B';
-      case 12: // Demon Hunter
+      case 'Demon Hunter':
         return '#A330C9';
-      case 11: // Druid
+      case 'Druid':
         return '#FF7D0A';
-      case 3: // Hunter
+      case 'Hunter':
         return '#ABD473';
-      case 8: // Mage
+      case 'Mage':
         return '#69CCF0';
-      case 10: // Monk
+      case 'Monk':
         return '#00FF96';
-      case 2: // Paladin
+      case 'Paladin':
         return '#F58CBA';
-      case 5: // Priest
+      case 'Priest':
         return '#FFFFFF';
-      case 4: // Rogue
+      case 'Rogue':
         return '#FFF569';
-      case 7: // Shaman
+      case 'Shaman':
         return '#0070DE';
-      case 9: // Warlock
+      case 'Warlock':
         return '#9482C9';
-      case 1: // Warrior
+      case 'Warrior':
         return '#C79C6E';
     }
   }

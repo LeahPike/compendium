@@ -17,7 +17,7 @@ export class CharacterAvatarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.classColour = this.gameDataService.getClassColour(this.character.class);
+    this.classColour = this.gameDataService.getClassColour(this.character.character_class.name);
   }
 
 }

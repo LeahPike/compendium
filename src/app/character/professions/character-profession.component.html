@@ -1,8 +1,14 @@
-<div class="small">
-  <img [title]="profession.name" [appIcon]="profession.icon" size="18"> ({{ profession.rank }}/{{ profession.max }})
-  <div>{{ profession.name }}</div>
-  <div class="progress">
-    <div class="progress-bar" role="progressbar" [ngStyle]="{'width': progressPercentage + '%'}"
-         [attr.aria-valuenow]="profession.rank" aria-valuemin="1" [attr.aria-valuemax]="profession.max"></div>
+<div class="small" *ngIf="profession">
+  <div> {{ profession.profession.name }}</div>
+  <div *ngFor="let tier of profession.tiers">
+    <div class="progress mt-1 bg-secondary">
+      <div class="progress-bar bg-success" role="progressbar"
+           [ngStyle]="{'width': 100 / tier.max_skill_points * tier.skill_points + '%'}"
+           [attr.aria-valuenow]="tier.skill_points" aria-valuemin="0" [attr.aria-valuemax]="tier.max_skill_points">
+        <div class="px-1">{{ tier.tier.name }}</div>
+      </div>
+    </div>
   </div>
+  <!--<img [title]="profession.profession.name" [appIcon]="profession.icon" size="18"> ({{ profession.rank }}/{{ profession.max }})-->
+
 </div>

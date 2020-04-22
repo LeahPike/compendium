@@ -1,18 +1,26 @@
-import {Item} from './item';
 import {AchievementCriteria} from './achievement-criteria';
+import {AchievementMedia} from './achievement-media';
 
-export interface Achievement {
-  id: number; // 7
-  title: string; // "Level 20"
-  points: number; // 10
-  description: string; // "Reach level 20"
-  rewardItems: Item[];
-  icon: string; // "achievement_level_20"
-  criteria: AchievementCriteria[];
-  accountWide: boolean; // false
-  factionId: number; // 2
-}
+export class Achievement {
 
-export interface Achievements {
-  achievements: Achievement[];
+  id: number;
+  name: string;
+  description: string;
+  criteria: AchievementCriteria;
+  child_criteria: AchievementCriteria[];
+  points: number;
+  display_order: number;
+  is_account_wide: boolean;
+  // category
+  media: { id: number, key: { href: string } };
+
+  // custom
+  mediaObject: AchievementMedia;
+  icon: string;
+
+  constructor() {
+    this.criteria = new AchievementCriteria();
+    this.child_criteria = [];
+    this.mediaObject = new AchievementMedia();
+  }
 }

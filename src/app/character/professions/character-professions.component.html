@@ -1,4 +1,4 @@
-<table class="table table-dark table-striped">
+<table class="table table-dark table-striped" *ngIf="characters && characters.length > 0">
   <thead>
   <tr>
     <td *ngFor="let character of characters" class="text-center">
@@ -9,18 +9,31 @@
   <tbody>
   <tr>
     <td *ngFor="let character of characters">
-      <div *ngFor="let profession of character.professions.primary">
         <div class="p-1">
-          <app-character-profession [profession]="profession"></app-character-profession>
+          <app-character-profession [profession]="character.professionsObject.primaries[0]"></app-character-profession>
         </div>
-      </div>
     </td>
   </tr>
   <tr>
     <td *ngFor="let character of characters">
-      <div *ngFor="let profession of character.professions.secondary" class="p-1">
-        <app-character-profession [profession]="profession"></app-character-profession>
-      </div>
+        <div class="p-1">
+          <app-character-profession [profession]="character.professionsObject.primaries[1]"></app-character-profession>
+        </div>
+    </td>
+  </tr>
+  <tr>
+    <td *ngFor="let character of characters">
+        <app-character-profession [profession]="character.professionsObject.secondaries[0]"></app-character-profession>
+    </td>
+  </tr>
+  <tr>
+    <td *ngFor="let character of characters">
+        <app-character-profession [profession]="character.professionsObject.secondaries[1]"></app-character-profession>
+    </td>
+  </tr>
+  <tr>
+    <td *ngFor="let character of characters">
+        <app-character-profession [profession]="character.professionsObject.secondaries[2]"></app-character-profession>
     </td>
   </tr>
   </tbody>

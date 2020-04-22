@@ -1,4 +1,4 @@
-<table class="table table-dark table-striped">
+<table class="table table-dark table-striped" *ngIf="characters && characters.length > 0">
   <thead>
   <tr>
     <td></td>
@@ -11,7 +11,7 @@
   <tr>
     <td></td>
     <td *ngFor="let character of characters" class="text-center">
-      {{ character.achievementPoints }}
+      {{ character.achievement_points }}
     </td>
   </tr>
   <ng-template ngFor let-achievement [ngForOf]="achievements">
@@ -20,12 +20,11 @@
         <div class="d-flex flex-row">
           <div>
             <a [href]="'https://www.wowhead.com/achievement=' + achievement.id" target="_blank">
-              <img [title]="achievement.title" class="mr-2"
-                   [appIcon]="achievement.icon" size="36">
+              <img [title]="achievement.name" class="mr-2 border border-secondary rounded" [src]="achievement.icon">
             </a>
           </div>
           <div>
-            {{ achievement.title }}
+            {{ achievement.name }}
             <div class="text-secondary">
               {{ achievement.description }}
             </div>

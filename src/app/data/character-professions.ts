@@ -1,7 +1,12 @@
-import {Profession} from './profession';
+import {CharacterProfession} from './character-profession';
 
-export interface CharacterProfessions {
-    primary: Profession[];
-    secondary: Profession[];
+export class CharacterProfessions {
+  primaries: CharacterProfession[];
+  secondaries: CharacterProfession[];
+
+  constructor() {
+    this.primaries = [];
+    this.secondaries = [];
+  }
 }
 
