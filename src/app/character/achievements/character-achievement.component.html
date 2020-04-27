@@ -1,35 +1,22 @@
+<div [tooltip]="tipContent" [delay]="250" container="body">
 <span *ngIf="achievement.is_account_wide === false">
   <i class="fas fa-2x fa-check-circle" [ngClass]="{'text-success': completed, 'text-dark' : !completed}"></i>
 </span>
-<span *ngIf="achievement.is_account_wide === true">
+  <span *ngIf="achievement.is_account_wide === true">
   <i class="fas fa-2x fa-exclamation-triangle text-warning" title="Account Wide"></i>
 </span>
+</div>
 
-<!--<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">-->
-  <!--<div class="modal-dialog" role="document">-->
-    <!--<div class="modal-content">-->
-      <!--<div class="modal-header">-->
-        <!--<h5 class="modal-title">{{ achievement.name }}</h5>-->
-        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-          <!--<span aria-hidden="true">&times;</span>-->
-        <!--</button>-->
-      <!--</div>-->
-      <!--<div class="modal-body">-->
-        <!--<div *ngFor="let item of criteria" class="small text-muted bg-dark mt-1 p-1">-->
-          <!--<div>-->
-            <!--id: {{ item.id }}-->
-          <!--</div>-->
-          <!--<div [ngClass]="{'text-success': item.quantity >= item.criteria.max}">-->
-            <!--max: {{ item.quantity }} / {{ item.criteria.max }}-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--{{ item.criteria.description }}-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--timestamp: {{ item.timestamp }}-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+<ng-template #tipContent>
+  <div class="text-left">
+    <div>{{ achievement.name }}</div>
+    <div class="text-muted">{{ achievement.description }}</div>
+    <ul class="mb-0 py-2 px-4" *ngIf="childCriteria.length > 0">
+      <li *ngFor="let item of childCriteria"
+          [ngClass]="{'text-success': item.characterChildCriteria && item.characterChildCriteria.is_completed, 'text-muted' : !item.characterChildCriteria || !item.characterChildCriteria.is_completed}">
+        {{ item.childCriteria.description }}
+      </li>
+    </ul>
+  </div>
+</ng-template>
+

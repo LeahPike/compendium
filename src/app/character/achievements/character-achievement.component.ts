@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Character} from '../../data/character';
 import {Achievement} from '../../data/achievement';
+import {CharacterAchievement} from '../../data/character-achievement';
+import {CharacterAchievementChildCriteria} from '../../data/character-achievement-child-criteria';
+import {AchievementChildCriteria} from '../../data/achievement-child-criteria';
 
 @Component({
   selector: 'app-character-achievement',
@@ -14,14 +17,39 @@ export class CharacterAchievementComponent implements OnInit {
   @Input()
   achievement: Achievement;
 
+  characterAchievement: CharacterAchievement;
+  childCriteria: { characterChildCriteria: CharacterAchievementChildCriteria, childCriteria: AchievementChildCriteria }[] = [];
+
   completed = false;
 
   // criteria: { id: number, quantity: number, created: number, timestamp: number, criteria: CharacterAchievementCriteria }[] = [];
 
   ngOnInit() {
 
+    this.characterAchievement = this.character.achievementsObject.achievements.find((a) => a.id === this.achievement.id);
+
+    if (this.characterAchievement) {
+      this.completed = this.characterAchievement.criteria.is_completed;
+    }
+
+    if (this.achievement.criteria.child_criteria) {
+      for (const childCriteria of this.achievement.criteria.child_criteria) {
+        let characterChildCriteria: CharacterAchievementChildCriteria;
+        if (this.characterAchievement) {
+          characterChildCriteria = this.characterAchievement.criteria.child_criteria.find((a) => a.id === childCriteria.id);
+        }
+        this.childCriteria.push({characterChildCriteria, childCriteria});
+      }
+    }
+
+//    console.log('childCriteria', this.childCriteria);
+
     // if the character has the achievement in it's achievementsCompleted collection mark it as completed
-    this.completed = this.character.achievementsObject.achievements.find((a) => a.id === this.achievement.id) != null;
+
+
+    // if (this.achievement.criteria.operator) {
+    //   console.log(this.character.name, this.achievement, characterAchievement);
+    // }
 
     // // if there is only one criteria, then we don't need to list the criteria
     // if (this.achievement.criteria.length > 0) {

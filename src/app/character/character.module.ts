@@ -10,12 +10,13 @@ import {CharacterProfessionsComponent} from './professions/character-professions
 import {CharacterAchievementsLegionComponent} from './achievements/character-achievements-legion.component';
 import {CharacterAchievementsBFAComponent} from './achievements/character-achievements-bfa.component';
 import {SharedModule} from '../shared/shared.module';
-
+import {TooltipModule} from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    TooltipModule.forRoot()
   ],
   declarations: [
     CharacterAvatarComponent,

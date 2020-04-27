@@ -1,5 +1,6 @@
 import {AchievementCriteria} from './achievement-criteria';
 import {AchievementMedia} from './achievement-media';
+import {AchievementChildCriteria} from './achievement-child-criteria';
 
 export class Achievement {
 
@@ -7,7 +8,6 @@ export class Achievement {
   name: string;
   description: string;
   criteria: AchievementCriteria;
-  child_criteria: AchievementCriteria[];
   points: number;
   display_order: number;
   is_account_wide: boolean;
@@ -20,7 +20,6 @@ export class Achievement {
 
   constructor() {
     this.criteria = new AchievementCriteria();
-    this.child_criteria = [];
     this.mediaObject = new AchievementMedia();
   }
 }

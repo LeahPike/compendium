@@ -1,30 +1,63 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Character} from '../data/character';
 import {BattleNetService} from './battle-net.service';
 import {Achievement} from '../data/achievement';
 
 import 'rxjs/add/observable/forkJoin';
 import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
-export class GameDataService {
+export class GameDataService implements OnInit {
 
-  achievementsLegion: Achievement[] = [];
-  achievementsBFA: Achievement[] = [];
-  characters: Character[] = [];
+  characterSubject: BehaviorSubject<Character[]> = new BehaviorSubject<Character[]>([]);
+  achievementsIdsLegionSubject: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  achievementsIdsBFASubject: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+
+  private achievementIds: number[] = []; // A list of achievement id's we store data for
 
   constructor(private battleNetService: BattleNetService) {
-
     this.battleNetService.getToken().subscribe((token) => {
-
+      this.addAchievementsLegion();
+      this.addAchievementsBFA();
       this.loadCharacters();
-      this.loadAchievementsLegion();
-      this.loadAchievementsBFA();
-
     });
   }
 
-  loadCharacters() {
+  ngOnInit() {
+  }
+
+  private addAchievementsLegion() {
+
+    const achievementIds: number[] = [];
+    achievementIds.push(10671); // Level 110
+    achievementIds.push(11171); // Arsenal of Power
+    achievementIds.push(10461); // Fighting with Style: Classic
+    achievementIds.push(10994); // A Glorious Campaign
+    achievementIds.push(11223); // Legendary Research
+    achievementIds.push(10459); // Improving on History
+    achievementIds.push(11298); // A Classy Outfit
+    achievementIds.push(11546); // Breaching the Tomb
+
+    this.achievementsIdsLegionSubject.next(achievementIds);
+
+    this.achievementIds = this.achievementIds.concat(achievementIds);
+  }
+
+  private addAchievementsBFA() {
+
+    const achievementIds: number[] = [];
+    achievementIds.push(12544); // Level 120
+    achievementIds.push(12510); // Ready for War ( Alliance )
+    achievementIds.push(12582); // Come Sail Away
+    achievementIds.push(12918); // Have a Heart
+
+    this.achievementsIdsBFASubject.next(achievementIds);
+
+    this.achievementIds = this.achievementIds.concat(achievementIds);
+  }
+
+  private loadCharacters() {
 
     const myCharacters = [];
     myCharacters.push('azjolnerub/asumi');
@@ -44,57 +77,33 @@ export class GameDataService {
     // myCharacters.push('khadgar/kirah');
     // myCharacters.push('khadgar/Zyrin');
 
-    for (const character of myCharacters) {
-      // observableBatch.push(this.battleNetService.getCharacter(character));
-      this.loadCharacter(character);
-    }
-  }
+    const observableBatch = [];
 
-  loadCharacter(value) {
-    this.battleNetService.getCharacter(value).subscribe((character: Character) => {
-      this.characters.push(character);
-      this.characters.sort((a, b) => a.level < b.level ? 1 : a.level > b.level ? -1 : 0);
+    for (const value of myCharacters) {
+      observableBatch.push(this.battleNetService.getCharacter(value, this.achievementIds));
+    }
+
+    Observable.forkJoin(observableBatch).subscribe((characters: Character[]) => {
+      characters.sort((a, b) => a.level < b.level ? 1 : a.level > b.level ? -1 : 0);
+      this.characterSubject.next(characters);
     });
   }
 
-  loadAchievementsBFA() {
+  getAchievements(achievementIds: number[]): Observable<Achievement[]> {
 
-    const achievements = [];
-    achievements.push(12544); // Level 120
-    achievements.push(12582); // Come Sail Away
-    achievements.push(12918); // Have a Heart
-
-    const observableBatch = [];
-    for (const achievementId of achievements) {
-      observableBatch.push(this.battleNetService.getAchievement(achievementId));
-    }
-    Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
-      for (const achievement of result) {
-        this.achievementsBFA.push(achievement);
+    return new Observable<Achievement[]>((observer) => {
+      const observableBatch = [];
+      for (const achievementId of achievementIds) {
+        observableBatch.push(this.battleNetService.getAchievement(achievementId));
       }
-    });
-  }
-
-  loadAchievementsLegion() {
-
-    const achievements = [];
-    achievements.push(10671); // Level 110
-    achievements.push(11171); // Arsenal of Power
-    achievements.push(10461); // Fighting with Style: Classic
-    achievements.push(10994); // A Glorious Campaign
-    achievements.push(11223); // Legendary Research
-    achievements.push(10459); // Improving on History
-    achievements.push(11298); // A Classy Outfit
-    achievements.push(11546); // Breaching the Tomb
-
-    const observableBatch = [];
-    for (const achievement of achievements) {
-      observableBatch.push(this.battleNetService.getAchievement(achievement));
-    }
-    Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
-      for (const achievement of result) {
-        this.achievementsLegion.push(achievement);
-      }
+      const achievements: Achievement[] = [];
+      Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
+        for (const achievement of result) {
+          achievements.push(achievement);
+        }
+        observer.next(achievements);
+        observer.complete();
+      });
     });
   }
 
@@ -126,4 +135,5 @@ export class GameDataService {
         return '#C79C6E';
     }
   }
+
 }

@@ -10,6 +10,8 @@ import {Achievement} from '../data/achievement';
 import {CharacterAchievements} from '../data/character-achievements';
 import {CharacterAchievement} from '../data/character-achievement';
 import {AchievementMedia} from '../data/achievement-media';
+import {CharacterAchievementCriteria} from '../data/character-achievement-criteria';
+import {CharacterAchievementChildCriteria} from '../data/character-achievement-child-criteria';
 
 @Injectable()
 export class BattleNetService {
@@ -42,7 +44,7 @@ export class BattleNetService {
     });
   }
 
-  getAchievement(achievementId: string): Observable<Achievement> {
+  getAchievement(achievementId: number): Observable<Achievement> {
     return new Observable<Achievement>((observer) => {
 
       if (localStorage.getItem('achievement' + achievementId) == null) {
@@ -72,7 +74,7 @@ export class BattleNetService {
     });
   }
 
-  getCharacter(realmCharacter: string): Observable<Character> {
+  getCharacter(realmCharacter: string, achievementIds: number[]): Observable<Character> {
     return new Observable<Character>((observer) => {
 
         if (localStorage.getItem(realmCharacter) == null) {
@@ -94,7 +96,7 @@ export class BattleNetService {
 
             observableBatch.push(this.getData(resultCharacter.media.href));
             observableBatch.push(this.getData(resultCharacter.professions.href));
-            observableBatch.push(this.getData(resultCharacter.achievements.href));
+            observableBatch.push(this.getCharacterAchievements(character, resultCharacter.achievements.href, achievementIds));
 
             Observable.forkJoin(observableBatch).subscribe((result: any[]) => {
 
@@ -141,13 +143,6 @@ export class BattleNetService {
                 }
               }
 
-              const resultAchievementObject: CharacterAchievements = result[2];
-              for (const resultCharacterAchievement of resultAchievementObject.achievements) {
-                const characterAchievement = new CharacterAchievement();
-                characterAchievement.id = resultCharacterAchievement.id;
-                character.achievementsObject.achievements.push(characterAchievement);
-              }
-
               // save
               localStorage.setItem(realmCharacter, JSON.stringify(character));
 
@@ -167,6 +162,45 @@ export class BattleNetService {
         }
       }
     );
+  }
+
+  private getCharacterAchievements(character: Character, href: string, achievementIds: number[]): Observable<any> {
+    return new Observable<any>((observer) => {
+
+      character.achievementsObject = new CharacterAchievements();
+
+      this.getData(href).subscribe((resultAchievementObject) => {
+
+        for (const resultCharacterAchievement of resultAchievementObject.achievements) {
+          if (achievementIds.indexOf(resultCharacterAchievement.id) >= 0) {
+
+            const characterAchievement = new CharacterAchievement();
+            characterAchievement.id = resultCharacterAchievement.id;
+            characterAchievement.completed_timestamp = resultCharacterAchievement.completed_timestamp;
+            characterAchievement.criteria.id = resultCharacterAchievement.criteria.id;
+            characterAchievement.criteria.is_completed = resultCharacterAchievement.criteria.is_completed;
+            character.achievementsObject.achievements.push(characterAchievement);
+
+            if (resultCharacterAchievement.criteria.child_criteria) {
+              for (const resultChildCriteria of resultCharacterAchievement.criteria.child_criteria) {
+                const childCriteria = new CharacterAchievementChildCriteria();
+                childCriteria.id = resultChildCriteria.id;
+                childCriteria.amount = resultChildCriteria.amount;
+                childCriteria.is_completed = resultChildCriteria.is_completed;
+                characterAchievement.criteria.child_criteria.push(childCriteria);
+              }
+            }
+
+            console.log('resultCharacterAchievement', resultCharacterAchievement);
+            console.log('characterAchievement', characterAchievement);
+
+          }
+        }
+
+        observer.next();
+        observer.complete();
+      });
+    });
   }
 
   private getData(url: string): Observable<any> {
