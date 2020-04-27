@@ -21,6 +21,7 @@ export class CharacterAchievementComponent implements OnInit {
   childCriteria: { characterChildCriteria: CharacterAchievementChildCriteria, childCriteria: AchievementChildCriteria }[] = [];
 
   completed = false;
+  completed_timestamp: Date;
 
   // criteria: { id: number, quantity: number, created: number, timestamp: number, criteria: CharacterAchievementCriteria }[] = [];
 
@@ -30,6 +31,9 @@ export class CharacterAchievementComponent implements OnInit {
 
     if (this.characterAchievement) {
       this.completed = this.characterAchievement.criteria.is_completed;
+      if (this.completed === true) {
+        this.completed_timestamp = new Date(this.characterAchievement.completed_timestamp);
+      }
     }
 
     if (this.achievement.criteria.child_criteria) {
