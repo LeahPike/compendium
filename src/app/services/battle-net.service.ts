@@ -90,6 +90,7 @@ export class BattleNetService {
             character.race.name = resultCharacter.race.name;
             character.character_class.name = resultCharacter.character_class.name;
             character.achievement_points = resultCharacter.achievement_points;
+            character.experience = resultCharacter.experience;
 
             const observableBatch = [];
 

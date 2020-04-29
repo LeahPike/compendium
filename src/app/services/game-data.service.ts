@@ -85,7 +85,27 @@ export class GameDataService implements OnInit {
     }
 
     Observable.forkJoin(observableBatch).subscribe((characters: Character[]) => {
-      characters.sort((a, b) => a.level < b.level ? 1 : a.level > b.level ? -1 : 0);
+      characters.sort((a, b) => {
+        if (a.level < b.level) {
+          return 1;
+        } else if (a.level > b.level) {
+          return -1;
+        } else {
+          if (a.experience < b.experience) {
+            return 1;
+          } else if (a.experience > b.experience) {
+            return -1;
+          } else {
+            if (a.achievement_points < b.achievement_points) {
+              return 1;
+            } else if (a.achievement_points > b.achievement_points) {
+              return -1;
+            } else {
+              return 0;
+            }
+          }
+        }
+      });
       this.characterSubject.next(characters);
     });
   }
