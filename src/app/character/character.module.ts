@@ -11,6 +11,7 @@ import {CharacterAchievementsLegionComponent} from './achievements/character-ach
 import {CharacterAchievementsBFAComponent} from './achievements/character-achievements-bfa.component';
 import {SharedModule} from '../shared/shared.module';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
+import {SettingsComponent} from './settings/settings.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
     CharacterCardComponent,
     CharacterCardsComponent,
     CharacterProfessionComponent,
-    CharacterProfessionsComponent
+    CharacterProfessionsComponent,
+    SettingsComponent
   ],
   exports: []
 })

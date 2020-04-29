@@ -10,7 +10,6 @@ import {Achievement} from '../data/achievement';
 import {CharacterAchievements} from '../data/character-achievements';
 import {CharacterAchievement} from '../data/character-achievement';
 import {AchievementMedia} from '../data/achievement-media';
-import {CharacterAchievementCriteria} from '../data/character-achievement-criteria';
 import {CharacterAchievementChildCriteria} from '../data/character-achievement-child-criteria';
 
 @Injectable()
@@ -103,6 +102,7 @@ export class BattleNetService {
               const resultMediaObject: CharacterMedia = result[0];
               character.mediaObject.bust_url = resultMediaObject.bust_url;
               character.mediaObject.avatar_url = resultMediaObject.avatar_url;
+              character.mediaObject.render_url = resultMediaObject.render_url;
 
               const resultProfessionsObject: CharacterProfessions = result[1];
               for (const resultCharacterProfession of resultProfessionsObject.primaries) {
@@ -190,10 +190,6 @@ export class BattleNetService {
                 characterAchievement.criteria.child_criteria.push(childCriteria);
               }
             }
-
-            console.log('resultCharacterAchievement', resultCharacterAchievement);
-            console.log('characterAchievement', characterAchievement);
-
           }
         }
 

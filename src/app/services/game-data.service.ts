@@ -49,6 +49,7 @@ export class GameDataService implements OnInit {
     const achievementIds: number[] = [];
     achievementIds.push(12544); // Level 120
     achievementIds.push(12510); // Ready for War ( Alliance )
+    achievementIds.push(12741); // Giving a Scrap
     achievementIds.push(12582); // Come Sail Away
     achievementIds.push(12918); // Have a Heart
 

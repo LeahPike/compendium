@@ -23,8 +23,6 @@ export class CharacterAchievementComponent implements OnInit {
   completed = false;
   completed_timestamp: Date;
 
-  // criteria: { id: number, quantity: number, created: number, timestamp: number, criteria: CharacterAchievementCriteria }[] = [];
-
   ngOnInit() {
 
     this.characterAchievement = this.character.achievementsObject.achievements.find((a) => a.id === this.achievement.id);
