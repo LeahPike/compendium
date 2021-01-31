@@ -100,10 +100,23 @@ export class BattleNetService {
 
             Observable.forkJoin(observableBatch).subscribe((result: any[]) => {
 
-              const resultMediaObject: CharacterMedia = result[0];
-              character.mediaObject.bust_url = resultMediaObject.bust_url;
-              character.mediaObject.avatar_url = resultMediaObject.avatar_url;
-              character.mediaObject.render_url = resultMediaObject.render_url;
+              character.mediaObject = new CharacterMedia();
+              for (const asset of result[0].assets) {
+                switch (asset.key) {
+                  case 'avatar':
+                    character.mediaObject.avatar_url = asset.value;
+                    break;
+                  case 'inset':
+                    character.mediaObject.inset_url = asset.value;
+                    break;
+                  case 'main':
+                    character.mediaObject.main_url = asset.value;
+                    break;
+                  case 'main-raw':
+                    character.mediaObject.main_raw_url = asset.value;
+                    break;
+                }
+              }
 
               const resultProfessionsObject: CharacterProfessions = result[1];
               for (const resultCharacterProfession of resultProfessionsObject.primaries) {
