@@ -1,6 +1,6 @@
 <div [tooltip]="tipContent" [delay]="250" container="body">
 <span *ngIf="achievement.is_account_wide === false">
-  <i class="fas fa-2x fa-check-circle" [ngClass]="{'text-success': completed, 'text-dark' : !completed}"></i>
+  <i class="fas fa-2x fa-check-circle" [ngClass]="{'text-success': completed, 'text-black-50' : !completed}"></i>
 </span>
   <span *ngIf="achievement.is_account_wide === true">
   <i class="fas fa-2x fa-exclamation-triangle text-warning" title="Account Wide"></i>

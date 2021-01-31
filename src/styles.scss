@@ -1,8 +1,9 @@
-@import '~bootstrap/dist/css/bootstrap.css';
+$primary: #f8b700;
+
+@import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 
 body {
   background-color: black;
-  color: white;
 }

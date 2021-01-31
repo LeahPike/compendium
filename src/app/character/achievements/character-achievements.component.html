@@ -1,26 +1,26 @@
-<table class="table table-dark table-striped" *ngIf="characters && characters.length > 0">
+<table class="table table-dark table-hover" *ngIf="characters && characters.length > 0">
   <thead>
   <tr>
-    <td></td>
-    <td *ngFor="let character of characters" class="text-center">
+    <th></th>
+    <th *ngFor="let character of characters" class="text-center">
       <app-character-avatar [character]="character"></app-character-avatar>
-    </td>
+    </th>
+  </tr>
+  <tr>
+    <th></th>
+    <th *ngFor="let character of characters" class="text-center">
+      {{ character.achievement_points }}
+    </th>
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td></td>
-    <td *ngFor="let character of characters" class="text-center">
-      {{ character.achievement_points }}
-    </td>
-  </tr>
   <ng-template ngFor let-achievement [ngForOf]="achievements">
     <tr>
       <td class="small">
         <div class="d-flex flex-row">
           <div class="mr-2">
             <a [href]="'https://www.wowhead.com/achievement=' + achievement.id" target="_blank">
-              <img [title]="achievement.name" class="border border-secondary rounded" style="width: 38px; height: 38px;" [src]="achievement.icon">
+              <img [title]="achievement.name" class="border border-dark" style="width: 38px; height: 38px;" [src]="achievement.icon">
             </a>
           </div>
           <div>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </td>
-      <td *ngFor="let character of characters" class="text-center">
+      <td *ngFor="let character of characters" class="text-center align-middle">
         <app-character-achievement [character]="character" [achievement]="achievement"></app-character-achievement>
       </td>
     </tr>
