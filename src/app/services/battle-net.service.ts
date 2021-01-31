@@ -48,6 +48,8 @@ export class BattleNetService {
 
       if (localStorage.getItem('achievement' + achievementId) == null) {
 
+        console.log('- achievement:' + achievementId, '... loaded from API');
+
         const url = this.baseUrl + 'data/wow/achievement/' + achievementId + '?namespace=static-eu&locale=en_GB';
         this.getData(url).subscribe((achievement: Achievement) => {
 
@@ -65,8 +67,11 @@ export class BattleNetService {
         });
 
       } else {
+
+        console.log('- achievement:' + achievementId, '... loaded from storage');
+
         // We already have this data, return it
-        const result = JSON.parse(localStorage.getItem('achievement' + achievementId));
+        const result: Achievement = JSON.parse(localStorage.getItem('achievement' + achievementId));
         observer.next(result);
         observer.complete();
       }
@@ -78,11 +83,14 @@ export class BattleNetService {
 
         if (localStorage.getItem(realmCharacter) == null) {
 
+          console.log('-', realmCharacter, '... loaded from API');
+
           const url = this.baseUrl + 'profile/wow/character/' + realmCharacter + '?namespace=profile-eu&locale=en_GB';
 
           this.getData(url).subscribe((resultCharacter: Character) => {
 
             const character = new Character();
+            character.id = resultCharacter.id;
             character.name = resultCharacter.name;
             character.level = resultCharacter.level;
             character.faction.name = resultCharacter.faction.name;
@@ -169,7 +177,10 @@ export class BattleNetService {
         } else {
 
           // We already have this data, return it
-          const result = JSON.parse(localStorage.getItem(realmCharacter));
+          const result: Character = JSON.parse(localStorage.getItem(realmCharacter));
+
+          console.log('-', realmCharacter, '... loaded from storage');
+
           observer.next(result);
           observer.complete();
 

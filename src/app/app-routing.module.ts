@@ -4,9 +4,14 @@ import {CharacterCardsComponent} from './character/cards/character-cards.compone
 import {CharacterProfessionsComponent} from './character/professions/character-professions.component';
 import {CharacterAchievementsBFAComponent} from './character/achievements/character-achievements-bfa.component';
 import {CharacterAchievementsLegionComponent} from './character/achievements/character-achievements-legion.component';
+import {CharacterAchievementsShadowlandsComponent} from './character/achievements/character-achievements-shadowlands.component';
 import {SettingsComponent} from './character/settings/settings.component';
 
 const routes: Routes = [
+  {
+    path: 'achievements/shadowlands',
+    component: CharacterAchievementsShadowlandsComponent
+  },
   {
     path: 'achievements/bfa',
     component: CharacterAchievementsBFAComponent

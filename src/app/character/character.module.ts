@@ -9,6 +9,7 @@ import {CharacterProfessionComponent} from './professions/character-profession.c
 import {CharacterProfessionsComponent} from './professions/character-professions.component';
 import {CharacterAchievementsLegionComponent} from './achievements/character-achievements-legion.component';
 import {CharacterAchievementsBFAComponent} from './achievements/character-achievements-bfa.component';
+import {CharacterAchievementsShadowlandsComponent} from './achievements/character-achievements-shadowlands.component';
 import {SharedModule} from '../shared/shared.module';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {SettingsComponent} from './settings/settings.component';
@@ -23,6 +24,7 @@ import {SettingsComponent} from './settings/settings.component';
     CharacterAvatarComponent,
     CharacterAchievementsLegionComponent,
     CharacterAchievementsBFAComponent,
+    CharacterAchievementsShadowlandsComponent,
     CharacterAchievementComponent,
     CharacterCardComponent,
     CharacterCardsComponent,

@@ -1,13 +1,18 @@
-<table class="table table-dark table-striped table-sm" *ngIf="storage && storage.length > 0">
+<table class="table table-dark table-striped table-sm" *ngIf="storageAchievements || storageCharacters">
   <thead>
   <tr>
-    <td></td>
-    <td></td>
-    <td class="text-right"><button type="button" class="btn btn-primary" (click)="clearStorage()">Clear All</button></td>
+    <td>Key</td>
+    <td>Length</td>
+    <td class="text-right"><button type="button" class="btn btn-primary btn-sm" (click)="reloadAll()">Reload All</button></td>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of storage">
+  <tr *ngFor="let item of storageCharacters">
+    <td>{{ item.key }}</td>
+    <td>{{ item.length }}</td>
+    <td class="text-right"><button type="button" class="btn btn-primary btn-sm" (click)="reloadCharacter(item.key)">Reload</button></td>
+  </tr>
+  <tr *ngFor="let item of storageAchievements">
     <td>{{ item.key }}</td>
     <td>{{ item.length }}</td>
     <td></td>

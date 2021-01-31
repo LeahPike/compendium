@@ -13,11 +13,8 @@ export class CharacterAvatarComponent implements OnInit {
 
   classColour: string;
 
-  constructor(private gameDataService: GameDataService) {
-  }
-
   ngOnInit() {
-    this.classColour = this.gameDataService.getClassColour(this.character.character_class.name);
+    this.classColour = GameDataService.getClassColour(this.character.character_class.name);
   }
 
 }
