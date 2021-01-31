@@ -1,9 +1,9 @@
-<table class="table table-dark table-striped" *ngIf="characters && characters.length > 0">
+<table class="table table-dark table-hover" *ngIf="characters && characters.length > 0">
   <thead>
   <tr>
-    <td *ngFor="let character of characters" class="text-center">
+    <th *ngFor="let character of characters" class="text-center">
       <app-character-avatar [character]="character"></app-character-avatar>
-    </td>
+    </th>
   </tr>
   </thead>
   <tbody>
