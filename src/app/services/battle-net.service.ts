@@ -191,11 +191,13 @@ export class BattleNetService {
             const characterAchievement = new CharacterAchievement();
             characterAchievement.id = resultCharacterAchievement.id;
             characterAchievement.completed_timestamp = resultCharacterAchievement.completed_timestamp;
-            characterAchievement.criteria.id = resultCharacterAchievement.criteria.id;
-            characterAchievement.criteria.is_completed = resultCharacterAchievement.criteria.is_completed;
+            if (resultCharacterAchievement.criteria) {
+              characterAchievement.criteria.id = resultCharacterAchievement.criteria.id;
+              characterAchievement.criteria.is_completed = resultCharacterAchievement.criteria.is_completed;
+            }
             character.achievementsObject.achievements.push(characterAchievement);
 
-            if (resultCharacterAchievement.criteria.child_criteria) {
+            if (resultCharacterAchievement.criteria && resultCharacterAchievement.criteria.child_criteria) {
               for (const resultChildCriteria of resultCharacterAchievement.criteria.child_criteria) {
                 const childCriteria = new CharacterAchievementChildCriteria();
                 childCriteria.id = resultChildCriteria.id;

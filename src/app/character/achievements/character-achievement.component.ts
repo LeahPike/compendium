@@ -34,7 +34,7 @@ export class CharacterAchievementComponent implements OnInit {
       }
     }
 
-    if (this.achievement.criteria.child_criteria) {
+    if (this.achievement.criteria && this.achievement.criteria.child_criteria) {
       for (const childCriteria of this.achievement.criteria.child_criteria) {
         let characterChildCriteria: CharacterAchievementChildCriteria;
         if (this.characterAchievement) {
