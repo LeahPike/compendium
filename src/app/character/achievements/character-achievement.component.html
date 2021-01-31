@@ -11,8 +11,8 @@
   <div class="text-left">
     <div>{{ achievement.name }}</div>
     <div class="text-muted">{{ achievement.description }}</div>
-    <div class="text-muted" *ngIf="completed_timestamp">
-      {{ completed_timestamp | date:'MMMM d y h:mm a'}}
+    <div class="text-muted" *ngIf="completedTimestamp">
+      {{ completedTimestamp | date:'MMMM d y h:mm a'}}
     </div>
     <ul class="mb-0 py-2 px-4" *ngIf="childCriteria.length > 0">
       <li *ngFor="let item of childCriteria"

@@ -1,11 +1,8 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Character} from '../data/character';
 import {BattleNetService} from './battle-net.service';
 import {Achievement} from '../data/achievement';
-
-import 'rxjs/add/observable/forkJoin';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable, BehaviorSubject, forkJoin} from 'rxjs';
 
 @Injectable()
 export class GameDataService {
@@ -17,7 +14,7 @@ export class GameDataService {
 
   private achievementIds: number[] = []; // A list of achievement id's we store data for
 
-  public static getClassColour(className: string) {
+  public static getClassColour(className: string): string {
     switch (className) {
       case 'Death Knight':
         return '#C41F3B';
@@ -44,9 +41,10 @@ export class GameDataService {
       case 'Warrior':
         return '#C79C6E';
     }
+    return '';
   }
 
-  static sortCharacters(characters: Character[]) {
+  static sortCharacters(characters: Character[]): void {
     characters.sort((a, b) => {
       if (a.level < b.level) {
         return 1;
@@ -82,7 +80,7 @@ export class GameDataService {
   public refreshData(): Observable<void> {
     return new Observable<void>((observer) => {
       console.log('Refreshing data...');
-      this.battleNetService.getToken().subscribe((token) => {
+      this.battleNetService.getToken().subscribe(() => {
         this.loadCharacters().subscribe(() => {
           console.log('Refreshing data complete!');
           observer.next();
@@ -100,7 +98,7 @@ export class GameDataService {
         observableBatch.push(this.battleNetService.getAchievement(achievementId));
       }
       const achievements: Achievement[] = [];
-      Observable.forkJoin(observableBatch).subscribe((result: Achievement[]) => {
+      forkJoin(observableBatch).subscribe((result: Achievement[]) => {
         for (const achievement of result) {
           achievements.push(achievement);
         }
@@ -110,7 +108,7 @@ export class GameDataService {
     });
   }
 
-  private addAchievementsLegion() {
+  private addAchievementsLegion(): void {
 
     const achievementIds: number[] = [];
     achievementIds.push(10671); // Level 110
@@ -127,7 +125,7 @@ export class GameDataService {
     this.achievementIds = this.achievementIds.concat(achievementIds);
   }
 
-  private addAchievementsBFA() {
+  private addAchievementsBFA(): void {
 
     const achievementIds: number[] = [];
     achievementIds.push(12544); // Level 120
@@ -141,7 +139,7 @@ export class GameDataService {
     this.achievementIds = this.achievementIds.concat(achievementIds);
   }
 
-  private addAchievementsShadowlands() {
+  private addAchievementsShadowlands(): void {
 
     const achievementIds: number[] = [];
     achievementIds.push(14334); // Into the Maw
@@ -179,7 +177,7 @@ export class GameDataService {
         observableBatch.push(this.battleNetService.getCharacter(value, this.achievementIds));
       }
 
-      Observable.forkJoin(observableBatch).subscribe((characters: Character[]) => {
+      forkJoin(observableBatch).subscribe((characters: Character[]) => {
         GameDataService.sortCharacters(characters);
         this.characterSubject.next(characters);
         observer.next();

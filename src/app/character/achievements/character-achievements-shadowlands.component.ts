@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Character} from '../../data/character';
 import {GameDataService} from '../../services/game-data.service';
 import {Achievement} from '../../data/achievement';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-character-achievements',
@@ -19,7 +19,7 @@ export class CharacterAchievementsShadowlandsComponent implements OnInit, OnDest
   constructor(private gameDataService: GameDataService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.characterSubscription = this.gameDataService.characterSubject.subscribe((characters) => {
       this.characters = characters;
     });

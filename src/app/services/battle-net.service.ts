@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {forkJoin, Observable} from 'rxjs';
 import {Character} from '../data/character';
 import {CharacterMedia} from '../data/character-media';
 import {CharacterProfessions} from '../data/character-professions';
@@ -21,8 +21,8 @@ export class BattleNetService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getToken(): Observable<any> {
-    return new Observable<any>((observer) => {
+  getToken(): Observable<string> {
+    return new Observable<string>((observer) => {
 
       // https://develop.battle.net/
       const clientId = '8f8cf4a7f94a4733a09d47addb435041';
@@ -32,7 +32,7 @@ export class BattleNetService {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+          Authorization: 'Basic ' + btoa(clientId + ':' + clientSecret)
         })
       };
 
@@ -55,7 +55,10 @@ export class BattleNetService {
 
           this.getData(achievement.media.key.href).subscribe((achievementMedia: AchievementMedia) => {
 
-            achievement.icon = achievementMedia.assets.find((e) => e.key === 'icon').value;
+            const icon = achievementMedia.assets.find((e) => e.key === 'icon');
+            if (icon != null) {
+              achievement.icon = icon.value;
+            }
 
             // save
             localStorage.setItem('achievement' + achievementId, JSON.stringify(achievement));
@@ -71,8 +74,11 @@ export class BattleNetService {
         console.log('- achievement:' + achievementId, '... loaded from storage');
 
         // We already have this data, return it
-        const result: Achievement = JSON.parse(localStorage.getItem('achievement' + achievementId));
-        observer.next(result);
+        const achievementString = localStorage.getItem('achievement' + achievementId);
+        if (achievementString != null) {
+          const result: Achievement = JSON.parse(achievementString);
+          observer.next(result);
+        }
         observer.complete();
       }
     });
@@ -106,7 +112,7 @@ export class BattleNetService {
             observableBatch.push(this.getData(resultCharacter.professions.href));
             observableBatch.push(this.getCharacterAchievements(character, resultCharacter.achievements.href, achievementIds));
 
-            Observable.forkJoin(observableBatch).subscribe((result: any[]) => {
+            forkJoin(observableBatch).subscribe((result: any[]) => {
 
               character.mediaObject = new CharacterMedia();
               for (const asset of result[0].assets) {
@@ -177,11 +183,12 @@ export class BattleNetService {
         } else {
 
           // We already have this data, return it
-          const result: Character = JSON.parse(localStorage.getItem(realmCharacter));
-
-          console.log('-', realmCharacter, '... loaded from storage');
-
-          observer.next(result);
+          const characterString = localStorage.getItem(realmCharacter);
+          if (characterString != null) {
+            const result: Character = JSON.parse(characterString);
+            console.log('-', realmCharacter, '... loaded from storage');
+            observer.next(result);
+          }
           observer.complete();
 
         }
@@ -230,7 +237,7 @@ export class BattleNetService {
     return new Observable<any>((observer) => {
         const httpOptions = {
           headers: new HttpHeaders({
-            'Authorization': 'Bearer ' + this.accessToken
+            Authorization: 'Bearer ' + this.accessToken
           })
         };
         // We don't have a copy of this data, so fetch it from battle.net

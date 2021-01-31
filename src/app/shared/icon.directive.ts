@@ -17,7 +17,7 @@ export class IconDirective implements OnChanges {
     this.image = el.nativeElement;
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
 
     let baseUrl = 'https://render-eu.worldofwarcraft.com/icons';
 

@@ -14,32 +14,34 @@ export class SettingsComponent implements OnInit {
   constructor(private gameDataService: GameDataService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.readStorage();
   }
 
-  readStorage() {
+  readStorage(): void {
     this.storageAchievements = [];
     this.storageCharacters = [];
     for (let i = 0, len = localStorage.length; i < len; i++) {
       const key = localStorage.key(i);
-      const value = localStorage[key];
-      if (key.startsWith('achievement')) {
-        this.storageAchievements.push({key, length: value.length});
-      } else {
-        this.storageCharacters.push({key, length: value.length});
+      if (key != null) {
+        const value = localStorage[key];
+        if (key.startsWith('achievement')) {
+          this.storageAchievements.push({key, length: value.length});
+        } else {
+          this.storageCharacters.push({key, length: value.length});
+        }
       }
     }
     this.storageAchievements.sort((a, b) => (a.key > b.key) ? 1 : -1);
     this.storageCharacters.sort((a, b) => (a.key > b.key) ? 1 : -1);
   }
 
-  reloadAll() {
+  reloadAll(): void {
     localStorage.clear();
     this.gameDataService.refreshData().subscribe(() => this.readStorage());
   }
 
-  reloadCharacter(key: string) {
+  reloadCharacter(key: string): void {
     localStorage.removeItem(key);
     this.gameDataService.refreshData().subscribe(() => this.readStorage());
   }
