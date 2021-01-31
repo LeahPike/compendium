@@ -2,6 +2,6 @@
   <img class="avatar-image border border-secondary" [src]="character.mediaObject.avatar_url"
        [title]="character.name">
 </div>
-<div [ngStyle]="{'color' : classColour }">
+<div [style.color]="classColour">
   {{ character.name }}
 </div>

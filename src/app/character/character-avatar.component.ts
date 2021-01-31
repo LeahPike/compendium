@@ -4,7 +4,8 @@ import {GameDataService} from '../services/game-data.service';
 
 @Component({
   selector: 'app-character-avatar',
-  templateUrl: './character-avatar.component.html'
+  templateUrl: './character-avatar.component.html',
+  styleUrls: ['character-avatar.scss']
 })
 export class CharacterAvatarComponent implements OnInit {
 
