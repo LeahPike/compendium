@@ -4,7 +4,7 @@
     <th>Key</th>
     <th>Length</th>
     <th class="text-right">
-      <button type="button" class="btn btn-primary btn-sm" (click)="reloadAll()">
+      <button type="button" class="btn btn-primary btn-sm" (click)="reloadAll($event)">
         <i class="fas fa-sync-alt mr-1"></i>Reload All
       </button>
     </th>
@@ -15,7 +15,7 @@
     <td>{{ item.key }}</td>
     <td>{{ item.length }}</td>
     <td class="text-right">
-      <button type="button" class="btn btn-primary btn-sm" (click)="reloadCharacter(item.key)">
+      <button type="button" class="btn btn-primary btn-sm" (click)="reloadCharacter(item.key, $event)">
         <i class="fas fa-sync-alt mr-1"></i>Reload
       </button>
     </td>

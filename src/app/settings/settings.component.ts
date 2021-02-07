@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {GameDataService} from '../../services/game-data.service';
+import {GameDataService} from '../services/game-data.service';
 
 @Component({
   selector: 'app-settings',
@@ -36,13 +36,33 @@ export class SettingsComponent implements OnInit {
     this.storageCharacters.sort((a, b) => (a.key > b.key) ? 1 : -1);
   }
 
-  reloadAll(): void {
-    localStorage.clear();
-    this.gameDataService.refreshData().subscribe(() => this.readStorage());
+  reloadAll(event: Event): void {
+    if (event.target instanceof HTMLButtonElement) {
+      const button: HTMLButtonElement = event.target;
+      if (button.children[0] instanceof HTMLElement) {
+        const icon: HTMLElement = button.children[0];
+        icon.classList.add('fa-spin');
+        localStorage.clear();
+        this.gameDataService.refreshData().subscribe(() => {
+          this.readStorage();
+          icon.classList.remove('fa-spin');
+        });
+      }
+    }
   }
 
-  reloadCharacter(key: string): void {
-    localStorage.removeItem(key);
-    this.gameDataService.refreshData().subscribe(() => this.readStorage());
+  reloadCharacter(key: string, event: Event): void {
+    if (event.target instanceof HTMLButtonElement) {
+      const button: HTMLButtonElement = event.target;
+      if (button.children[0] instanceof HTMLElement) {
+        const icon: HTMLElement = button.children[0];
+        icon.classList.add('fa-spin');
+        localStorage.removeItem(key);
+        this.gameDataService.refreshData().subscribe(() => {
+          this.readStorage();
+          icon.classList.remove('fa-spin');
+        });
+      }
+    }
   }
 }

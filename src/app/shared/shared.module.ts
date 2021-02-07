@@ -5,13 +5,13 @@ import {IconDirective} from './icon.directive';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [
     IconDirective
   ],
   exports: [
-    IconDirective
+    IconDirective,
   ]
 })
 export class SharedModule {

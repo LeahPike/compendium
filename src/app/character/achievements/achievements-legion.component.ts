@@ -5,10 +5,10 @@ import {Achievement} from '../../data/achievement';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-character-achievements',
-  templateUrl: './character-achievements.component.html'
+  selector: 'app-achievements',
+  templateUrl: './achievements.component.html'
 })
-export class CharacterAchievementsBFAComponent implements OnInit, OnDestroy {
+export class AchievementsLegionComponent implements OnInit, OnDestroy {
 
   characters: Character[] = [];
   characterSubscription: Subscription;
@@ -23,7 +23,8 @@ export class CharacterAchievementsBFAComponent implements OnInit, OnDestroy {
     this.characterSubscription = this.gameDataService.characterSubject.subscribe((characters) => {
       this.characters = characters;
     });
-    this.achievementsSubscription = this.gameDataService.achievementsIdsBFASubject.subscribe((achievementIds) => {
+
+    this.achievementsSubscription = this.gameDataService.achievementsIdsLegionSubject.subscribe((achievementIds) => {
       this.gameDataService.getAchievements(achievementIds).subscribe((achievements) => {
         this.achievements = achievements;
       });

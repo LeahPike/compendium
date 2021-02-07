@@ -7,6 +7,7 @@ import {CharacterModule} from './character/character.module';
 import {AppRoutingModule} from './app-routing.module';
 import {BattleNetService} from './services/battle-net.service';
 import {GameDataService} from './services/game-data.service';
+import {SettingsModule} from './settings/settings.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {GameDataService} from './services/game-data.service';
     BrowserModule,
     HttpClientModule,
     CharacterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SettingsModule
   ],
   providers: [
     BattleNetService,

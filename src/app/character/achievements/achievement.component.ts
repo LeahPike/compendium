@@ -6,10 +6,10 @@ import {CharacterAchievementChildCriteria} from '../../data/character-achievemen
 import {AchievementChildCriteria} from '../../data/achievement-child-criteria';
 
 @Component({
-  selector: 'app-character-achievement',
-  templateUrl: './character-achievement.component.html'
+  selector: 'app-achievement',
+  templateUrl: './achievement.component.html'
 })
-export class CharacterAchievementComponent implements OnInit {
+export class AchievementComponent implements OnInit {
 
   @Input()
   character: Character;

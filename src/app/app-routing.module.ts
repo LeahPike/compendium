@@ -2,23 +2,23 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CharacterCardsComponent} from './character/cards/character-cards.component';
 import {CharacterProfessionsComponent} from './character/professions/character-professions.component';
-import {CharacterAchievementsBFAComponent} from './character/achievements/character-achievements-bfa.component';
-import {CharacterAchievementsLegionComponent} from './character/achievements/character-achievements-legion.component';
-import {CharacterAchievementsShadowlandsComponent} from './character/achievements/character-achievements-shadowlands.component';
-import {SettingsComponent} from './character/settings/settings.component';
+import {AchievementsBfaComponent} from './character/achievements/achievements-bfa.component';
+import {AchievementsLegionComponent} from './character/achievements/achievements-legion.component';
+import {AchievementsShadowlandsComponent} from './character/achievements/achievements-shadowlands.component';
+import {SettingsComponent} from './settings/settings.component';
 
 const routes: Routes = [
   {
     path: 'achievements/shadowlands',
-    component: CharacterAchievementsShadowlandsComponent
+    component: AchievementsShadowlandsComponent
   },
   {
     path: 'achievements/bfa',
-    component: CharacterAchievementsBFAComponent
+    component: AchievementsBfaComponent
   },
   {
     path: 'achievements/legion',
-    component: CharacterAchievementsLegionComponent
+    component: AchievementsLegionComponent
   },
   {
     path: 'characters',

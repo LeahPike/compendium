@@ -1,36 +1,25 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
-import {CharacterAvatarComponent} from './character-avatar.component';
-import {CharacterAchievementComponent} from './achievements/character-achievement.component';
 import {CharacterCardsComponent} from './cards/character-cards.component';
 import {CharacterCardComponent} from './cards/character-card.component';
 import {CharacterProfessionComponent} from './professions/character-profession.component';
 import {CharacterProfessionsComponent} from './professions/character-professions.component';
-import {CharacterAchievementsLegionComponent} from './achievements/character-achievements-legion.component';
-import {CharacterAchievementsBFAComponent} from './achievements/character-achievements-bfa.component';
-import {CharacterAchievementsShadowlandsComponent} from './achievements/character-achievements-shadowlands.component';
 import {SharedModule} from '../shared/shared.module';
-import {TooltipModule} from 'ngx-bootstrap/tooltip';
-import {SettingsComponent} from './settings/settings.component';
+import {AvatarModule} from './avatar/avatar.module';
+import {AchievementsModule} from './achievements/achievements.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    TooltipModule.forRoot()
+    AvatarModule,
+    AchievementsModule
   ],
   declarations: [
-    CharacterAvatarComponent,
-    CharacterAchievementsLegionComponent,
-    CharacterAchievementsBFAComponent,
-    CharacterAchievementsShadowlandsComponent,
-    CharacterAchievementComponent,
     CharacterCardComponent,
     CharacterCardsComponent,
     CharacterProfessionComponent,
-    CharacterProfessionsComponent,
-    SettingsComponent
+    CharacterProfessionsComponent
   ],
   exports: []
 })

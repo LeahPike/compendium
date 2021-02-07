@@ -3,7 +3,7 @@
   <tr>
     <th></th>
     <th *ngFor="let character of characters" class="text-center">
-      <app-character-avatar [character]="character"></app-character-avatar>
+      <app-avatar [character]="character"></app-avatar>
     </th>
   </tr>
   <tr>
@@ -20,7 +20,7 @@
         <div class="d-flex flex-row">
           <div class="mr-2">
             <a [href]="'https://www.wowhead.com/achievement=' + achievement.id" target="_blank">
-              <img [title]="achievement.name" class="border border-dark" style="width: 38px; height: 38px;" [src]="achievement.icon">
+              <img [alt]="achievement.name" [title]="achievement.name" class="border border-dark" style="width: 38px; height: 38px;" [src]="achievement.icon">
             </a>
           </div>
           <div>
@@ -30,7 +30,7 @@
         </div>
       </td>
       <td *ngFor="let character of characters" class="text-center align-middle">
-        <app-character-achievement [character]="character" [achievement]="achievement"></app-character-achievement>
+        <app-achievement [character]="character" [achievement]="achievement"></app-achievement>
       </td>
     </tr>
   </ng-template>
