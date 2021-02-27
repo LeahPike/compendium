@@ -143,8 +143,23 @@ export class GameDataService {
 
     const achievementIds: number[] = [];
     achievementIds.push(14334); // Into the Maw
-    achievementIds.push(14627); // Choosing Your Purpose
+    achievementIds.push(14281); // The Path to Ascension
+    achievementIds.push(14206); // Blade of the Primus
+    achievementIds.push(14164); // Awaken, Ardenweald
+    achievementIds.push(13878); // The Master of Revendreth
+
     achievementIds.push(14783); // Level 60
+
+    achievementIds.push(14627); // Choosing Your Purpose
+    achievementIds.push(14834); // Bound with Purpose
+    achievementIds.push(14835); // A Resolute Bond
+    achievementIds.push(14836); // Unwavering Bond
+    achievementIds.push(14837); // Nexus of Bonds
+
+    achievementIds.push(14628); // The Road to Renown
+    achievementIds.push(14629); // Gaining Respect
+    achievementIds.push(14630); // Becoming a Hero
+    achievementIds.push(14631); // Champion of the Covenant
 
     this.achievementsIdsShadowlandsSubject.next(achievementIds);
 
