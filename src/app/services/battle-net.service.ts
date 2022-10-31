@@ -105,6 +105,7 @@ export class BattleNetService {
             character.character_class.name = resultCharacter.character_class.name;
             character.achievement_points = resultCharacter.achievement_points;
             character.experience = resultCharacter.experience;
+            character.realm = resultCharacter.realm;
 
             const observableBatch = [];
 

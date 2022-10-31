@@ -5,7 +5,15 @@
     <div class="row">
 
       <div class="col-6">
-        <h4>{{ character.name}}</h4>
+        <h4 class="mb-0">
+          <a target="_blank"
+             href="https://worldofwarcraft.com/en-gb/character/eu/{{ character.realm.slug }}/{{ character.name }}">
+            {{ character.name }}
+          </a>
+        </h4>
+        <div class="small">
+          {{ character.realm.name }}
+        </div>
       </div>
 
       <div class="col-6 text-right">
@@ -31,7 +39,7 @@
       </div>
 
       <div class="col-6 text-right">
-         {{ character.character_class.name }}
+        {{ character.character_class.name }}
       </div>
 
     </div>
