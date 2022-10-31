@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Character} from '../data/character';
-import {BattleNetService} from './battle-net.service';
-import {Achievement} from '../data/achievement';
-import {Observable, BehaviorSubject, forkJoin} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Character } from '../data/character';
+import { BattleNetService } from './battle-net.service';
+import { Achievement } from '../data/achievement';
+import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
 
 @Injectable()
 export class GameDataService {
@@ -51,18 +51,12 @@ export class GameDataService {
       } else if (a.level > b.level) {
         return -1;
       } else {
-        if (a.experience < b.experience) {
+        if (a.achievement_points < b.achievement_points) {
           return 1;
-        } else if (a.experience > b.experience) {
+        } else if (a.achievement_points > b.achievement_points) {
           return -1;
         } else {
-          if (a.achievement_points < b.achievement_points) {
-            return 1;
-          } else if (a.achievement_points > b.achievement_points) {
-            return -1;
-          } else {
-            return 0;
-          }
+          return 0;
         }
       }
     });
