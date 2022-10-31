@@ -1,16 +1,19 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {Character} from '../../data/character';
+import { GameDataService } from '../../services/game-data.service';
 
 @Component({
   selector: 'app-character-card',
   templateUrl: './character-card.component.html'
 })
-export class CharacterCardComponent {
+export class CharacterCardComponent implements OnInit {
 
   @Input()
   character: Character;
 
-  constructor() {
+  classColour: string;
 
+  ngOnInit(): void {
+    this.classColour = GameDataService.getClassColour(this.character.character_class.name);
   }
 }
