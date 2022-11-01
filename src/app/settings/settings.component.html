@@ -3,9 +3,9 @@
   <tr>
     <th>Key</th>
     <th>Length</th>
-    <th class="text-right">
+    <th class="text-end">
       <button type="button" class="btn btn-primary btn-sm" (click)="reloadAll($event)">
-        <i class="fas fa-sync-alt mr-1"></i>Reload All
+        <i class="fas fa-sync-alt me-1"></i>Reload All
       </button>
     </th>
   </tr>
@@ -14,9 +14,9 @@
   <tr *ngFor="let item of storageCharacters">
     <td>{{ item.key }}</td>
     <td>{{ item.length }}</td>
-    <td class="text-right">
+    <td class="text-end">
       <button type="button" class="btn btn-primary btn-sm" (click)="reloadCharacter(item.key, $event)">
-        <i class="fas fa-sync-alt mr-1"></i>Reload
+        <i class="fas fa-sync-alt me-1"></i>Reload
       </button>
     </td>
   </tr>
