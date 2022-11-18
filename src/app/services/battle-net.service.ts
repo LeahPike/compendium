@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {forkJoin, Observable} from 'rxjs';
-import {Character} from '../data/character';
-import {CharacterMedia} from '../data/character-media';
-import {CharacterProfessions} from '../data/character-professions';
-import {CharacterProfession} from '../data/character-profession';
-import {CharacterProfessionTier} from '../data/character-profession-tier';
-import {Achievement} from '../data/achievement';
-import {CharacterAchievements} from '../data/character-achievements';
-import {CharacterAchievement} from '../data/character-achievement';
-import {AchievementMedia} from '../data/achievement-media';
-import {CharacterAchievementChildCriteria} from '../data/character-achievement-child-criteria';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { forkJoin, Observable } from 'rxjs';
+import { Character } from '../data/character';
+import { CharacterMedia } from '../data/character-media';
+import { CharacterProfessions } from '../data/character-professions';
+import { CharacterProfession } from '../data/character-profession';
+import { CharacterProfessionTier } from '../data/character-profession-tier';
+import { Achievement } from '../data/achievement';
+import { CharacterAchievements } from '../data/character-achievements';
+import { CharacterAchievement } from '../data/character-achievement';
+import { AchievementMedia } from '../data/achievement-media';
+import { CharacterAchievementChildCriteria } from '../data/character-achievement-child-criteria';
 
 @Injectable()
 export class BattleNetService {
@@ -134,33 +134,14 @@ export class BattleNetService {
               }
 
               const resultProfessionsObject: CharacterProfessions = result[1];
-              for (const resultCharacterProfession of resultProfessionsObject.primaries) {
 
-                const characterProfession = new CharacterProfession();
-                characterProfession.profession.name = resultCharacterProfession.profession.name;
-                character.professionsObject.primaries.push(characterProfession);
+              if (resultProfessionsObject.primaries) {
+                for (const resultCharacterProfession of resultProfessionsObject.primaries) {
 
-                for (const resultCharacterProfessionTier of resultCharacterProfession.tiers) {
-                  const characterProfessionTier = new CharacterProfessionTier();
-                  characterProfessionTier.skill_points = resultCharacterProfessionTier.skill_points;
-                  characterProfessionTier.max_skill_points = resultCharacterProfessionTier.max_skill_points;
-                  characterProfessionTier.tier.name = resultCharacterProfessionTier.tier.name;
-                  characterProfession.tiers.push(characterProfessionTier);
-                }
-              }
-              for (const resultCharacterProfession of resultProfessionsObject.secondaries) {
+                  const characterProfession = new CharacterProfession();
+                  characterProfession.profession.name = resultCharacterProfession.profession.name;
+                  character.professionsObject.primaries.push(characterProfession);
 
-                const characterProfession = new CharacterProfession();
-                characterProfession.profession.name = resultCharacterProfession.profession.name;
-                character.professionsObject.secondaries.push(characterProfession);
-
-                if (characterProfession.profession.name === 'Archaeology') {
-                  const characterProfessionTier = new CharacterProfessionTier();
-                  characterProfessionTier.skill_points = resultCharacterProfession.skill_points;
-                  characterProfessionTier.max_skill_points = resultCharacterProfession.max_skill_points;
-                  characterProfessionTier.tier.name = resultCharacterProfession.profession.name;
-                  characterProfession.tiers.push(characterProfessionTier);
-                } else {
                   for (const resultCharacterProfessionTier of resultCharacterProfession.tiers) {
                     const characterProfessionTier = new CharacterProfessionTier();
                     characterProfessionTier.skill_points = resultCharacterProfessionTier.skill_points;
@@ -168,7 +149,31 @@ export class BattleNetService {
                     characterProfessionTier.tier.name = resultCharacterProfessionTier.tier.name;
                     characterProfession.tiers.push(characterProfessionTier);
                   }
+                }
+              }
 
+              if (resultProfessionsObject.secondaries) {
+                for (const resultCharacterProfession of resultProfessionsObject.secondaries) {
+
+                  const characterProfession = new CharacterProfession();
+                  characterProfession.profession.name = resultCharacterProfession.profession.name;
+                  character.professionsObject.secondaries.push(characterProfession);
+
+                  if (characterProfession.profession.name === 'Archaeology') {
+                    const characterProfessionTier = new CharacterProfessionTier();
+                    characterProfessionTier.skill_points = resultCharacterProfession.skill_points;
+                    characterProfessionTier.max_skill_points = resultCharacterProfession.max_skill_points;
+                    characterProfessionTier.tier.name = resultCharacterProfession.profession.name;
+                    characterProfession.tiers.push(characterProfessionTier);
+                  } else {
+                    for (const resultCharacterProfessionTier of resultCharacterProfession.tiers) {
+                      const characterProfessionTier = new CharacterProfessionTier();
+                      characterProfessionTier.skill_points = resultCharacterProfessionTier.skill_points;
+                      characterProfessionTier.max_skill_points = resultCharacterProfessionTier.max_skill_points;
+                      characterProfessionTier.tier.name = resultCharacterProfessionTier.tier.name;
+                      characterProfession.tiers.push(characterProfessionTier);
+                    }
+                  }
                 }
               }
 

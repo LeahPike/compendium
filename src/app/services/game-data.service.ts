@@ -22,6 +22,8 @@ export class GameDataService {
         return '#A330C9';
       case 'Druid':
         return '#FF7D0A';
+      case 'Evoker':
+        return '#33937F';
       case 'Hunter':
         return '#ABD473';
       case 'Mage':
@@ -167,7 +169,6 @@ export class GameDataService {
       myCharacters.push('azjolnerub/lexiss');
       myCharacters.push('azjolnerub/livana');
       myCharacters.push('azjolnerub/mayara');
-      // myCharacters.push('azjolnerub/sameera');
       myCharacters.push('azjolnerub/salus');
       myCharacters.push('azjolnerub/sheeta');
       myCharacters.push('azjolnerub/siasan');
@@ -175,10 +176,13 @@ export class GameDataService {
       myCharacters.push('azjolnerub/sunzie');
       myCharacters.push('azjolnerub/talah');
       myCharacters.push('azjolnerub/valiah');
+      myCharacters.push('azjolnerub/xienith');
       myCharacters.push('azjolnerub/zirelle');
 
       // myCharacters.push('khadgar/kirah');
       // myCharacters.push('khadgar/Zyrin');
+
+      // myCharacters.push('azjolnerub/sameera');
 
       const observableBatch = [];
 
